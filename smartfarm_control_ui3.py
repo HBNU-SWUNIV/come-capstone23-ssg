@@ -294,6 +294,8 @@ class smartfarm_ui(QDialog):
         if self.water_power_button.isChecked() :
             farm.json_data["water_pump_power"] = True
             self.water_power_button.setText("ON")
+            self.water_auto_button.setEnabled(True)
+            self.water_auto_button.setEnabled(True)
             if self.water_onoff_button.isChecked():
                 self.water_onoff_button.setText("ON")
                 self.water_auto_button.setEnabled(False)
@@ -444,7 +446,9 @@ class smartfarm:
         self.hum_warning = ""
         self.soil_warning = ""
         #remote data
-        self.remote_power = 0
+        self.remote_power = False
+        
+        self.before_water_auto_toggle = False
         
         
         #json init
@@ -571,23 +575,28 @@ class smartfarm:
         while True:
             now_water_time = datetime.now()
             if self.json_data["water_pump_power"] == True:
-                if self.json_data["remote_power"] == False:
-                    widget.water_auto_button.setEnabled(True)
-                    widget.water_onoff_button.setEnabled(True)
+                #if self.json_data["remote_power"] == False:
+                    #widget.water_auto_button.setEnabled(True)
+                    #widget.water_onoff_button.setEnabled(True)
                 if self.json_data["water_pump_auto_toggle"] == True:
+                    if self.before_water_auto_toggle == False:
+                        this_water_time = datetime.now()
+                        self.before_water_auto_toggle = True
                     widget.water_onoff_button.setEnabled(False)
-                    if int(now_water_time.minute) == int(widget.this_water_time.minute) + self.json_data["water_pump_start_time"]:
+                    if int(now_water_time.minute) == int(this_water_time.minute) + self.json_data["water_pump_start_time"]:
                         self.json_data["water_pump_state"] = True
                         self.json_data["water_pump_toggle"] = True
                         self.water_pump_pwm.ChangeDutyCycle(100)
-                        if self.json_data["remote_power"] == False:
-                            widget.this_water_time = now_water_time
+                        widget.water_onoff_button.setEnabled(False)
                         time.sleep(self.json_data["water_pump_running_time"])
                         self.water_pump_pwm.ChangeDutyCycle(0)
                         self.json_data["water_pump_state"] = False
                         self.json_data["water_pump_toggle"] = False
+                        this_water_time = datetime.now()
+                        widget.water_onoff_button.setEnabled(True)
                         
                 else:
+                    self.before_water_auto_toggle = False
                     if self.json_data["remote_power"] == False:
                         widget.water_onoff_button.setEnabled(True)
                     if self.json_data["water_pump_toggle"] == True:
@@ -595,6 +604,7 @@ class smartfarm:
                             widget.water_auto_button.setEnabled(False)
                         self.json_data["water_pump_state"] = True
                         self.water_pump_pwm.ChangeDutyCycle(100)
+                        widget.water_onoff_button.setEnabled(False)
                         if self.json_data["water_pump_running_time"] >0:
                             time.sleep(self.json_data["water_pump_running_time"])
                             self.water_pump_pwm.ChangeDutyCycle(0)
