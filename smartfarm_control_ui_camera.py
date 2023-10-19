@@ -16,6 +16,33 @@ from PyQt5.QtWidgets import QApplication, QDialog, QLabel,QComboBox,QTimeEdit
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QPixmap
 
+import os
+import subprocess
+
+class smartfarm_camera:
+	
+    def __init__(self, folder_path):
+        self.folder_path=folder_path
+        self.camera_url = ""
+    
+    def capture_image(self):
+        while True:
+            timestamp= datetime.now().strftime("%Y%m%d%H%M%S")
+            filename = f"image_{timestamp}.jpg"
+            filepath=os.path.join(self.folder_path,filename)
+            subprocess.run(["fswebcam","-r","640x480","--no-banner",filepath])
+            files = {'file':open(self.filename,'rb')}
+            response_image = requests.post(self.camera_url,files=files)
+            time.sleep(5)
+    """
+    def send_image(self):
+        while True:
+            url = ""
+            files = {'file':open(self.filename,'rb')}
+            response_image = requests.post(self.url,files=files)
+            time.sleep(5)
+            """
+
 
 class smartfarm_ui(QDialog):
     def __init__(self):
@@ -93,6 +120,7 @@ class smartfarm_ui(QDialog):
         self.timer = QTimer(self)
         self.timer.setInterval(500)
         self.timer.timeout.connect(self.home_set_text)
+        self.timer.timeout.connect(self.remote_init)
         
         self.timer.start()
         initial_time = QTime(0, 0)
@@ -759,11 +787,13 @@ widget = None
 if __name__ == "__main__":
     try:
 
-        
+        folder_path = "/home/boseong/smartfarm/bronze/smartfarm_image"
         app = QApplication(sys.argv)
         widget = smartfarm_ui()
         widget.show()
         
+        #camera_send_thread = threading.Thread(target = smartfarm_camera.send_image)
+        camera_thread = threading.Thread(target = smartfarm_camera.capture_image,args=(folder_path,))
         fan_thread = threading.Thread(target = farm.fan_control)
         water_pump_thread = threading.Thread(target = farm.water_pump_control)
         digital_thread = threading.Thread(target = farm.digital_sensor)
@@ -775,6 +805,7 @@ if __name__ == "__main__":
         led_thread.start()
         fan_thread.start()
         water_pump_thread.start()
+        camera_thread.start()
         
         
         sys.exit(app.exec_())
@@ -783,7 +814,7 @@ if __name__ == "__main__":
         led_thread.join()
         fan_thread.join()
         water_pump_thread.join()
-        
+        camera_thread.join()
         
     except KeyboardInterrupt:
         farm.led_pwm.stop()
