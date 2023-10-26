@@ -98,41 +98,41 @@ class smartfarm_ui(QDialog):
         initial_time = QTime(0, 0)
         
     def led_time_set(self):
-        farm.json_data["led_start_time_value"] = int(self.led_auto_start_time.time().toString("hh"))
-        farm.json_data["led_start_minute_value"] = int(self.led_auto_start_time.time().toString("mm"))
-        farm.json_data["led_end_time_value"] = int(self.led_auto_end_time.time().toString("hh"))
-        farm.json_data["led_end_minute_value"] = int(self.led_auto_end_time.time().toString("mm"))
+        farm.json_data["ledstarttimevalue"] = int(self.led_auto_start_time.time().toString("hh"))
+        farm.json_data["ledstartminutevalue"] = int(self.led_auto_start_time.time().toString("mm"))
+        farm.json_data["ledendtimevalue"] = int(self.led_auto_end_time.time().toString("hh"))
+        farm.json_data["ledendminutevalue"] = int(self.led_auto_end_time.time().toString("mm"))
     def water_pump_set(self):
-        farm.json_data["water_pump_start_time"] = int(self.water_start_time.currentText())
-        farm.json_data["water_pump_running_time"] = int(self.water_running_time.currentText())
+        farm.json_data["waterpumpstarttime"] = int(self.water_start_time.currentText())
+        farm.json_data["waterpumprunningtime"] = int(self.water_running_time.currentText())
     def fan_time_set(self):
-        farm.json_data["fan_start_time_value"] = int(self.fan_auto_start_time.time().toString("hh"))
-        farm.json_data["fan_start_minute_value"] = int(self.fan_auto_start_time.time().toString("mm"))
-        farm.json_data["fan_end_time_value"] = int(self.fan_auto_end_time.time().toString("hh"))
-        farm.json_data["fan_end_minute_value"] = int(self.fan_auto_end_time.time().toString("mm"))
+        farm.json_data["fanstarttimevalue"] = int(self.fan_auto_start_time.time().toString("hh"))
+        farm.json_data["fanstartminutevalue"] = int(self.fan_auto_start_time.time().toString("mm"))
+        farm.json_data["fanendtimevalue"] = int(self.fan_auto_end_time.time().toString("hh"))
+        farm.json_data["fanendminutevalue"] = int(self.fan_auto_end_time.time().toString("mm"))
     def door_time_set(self):
-        farm.json_data["door_start_time_value"] = int(self.door_auto_start_time.time().toString("hh"))
-        farm.json_data["door_start_minute_value"] = int(self.door_auto_start_time.time().toString("mm"))
-        farm.json_data["door_end_time_value"] = int(self.door_auto_end_time.time().toString("hh"))
-        farm.json_data["door_end_minute_value"] = int(self.door_auto_end_time.time().toString("mm"))
+        farm.json_data["doorstarttimevalue"] = int(self.door_auto_start_time.time().toString("hh"))
+        farm.json_data["doorstartminutevalue"] = int(self.door_auto_start_time.time().toString("mm"))
+        farm.json_data["doorendtimevalue"] = int(self.door_auto_end_time.time().toString("hh"))
+        farm.json_data["doorendminutevalue"] = int(self.door_auto_end_time.time().toString("mm"))
     
     def remote_init(self):
-        if farm.json_data["remote_power"] != self.before_remote_power and farm.json_data["remote_power"] == True:
+        if farm.json_data["remotepower"] != self.before_remote_power and farm.json_data["remotepower"] == True:
             
             self.before_remote_power = True
             #led time set
-            farm.json_data["led_start_time_value"]=0
-            farm.json_data["led_start_minute_value"]=0
-            farm.json_data["led_end_time_value"]=0
-            farm.json_data["led_end_time_value"]=0
+            farm.json_data["ledstarttimevalue"]=0
+            farm.json_data["ledstartminutevalue"]=0
+            farm.json_data["ledendtimevalue"]=0
+            farm.json_data["ledendtimevalue"]=0
             self.led_auto_start_time.setTime(initial_time)
             self.led_auto_end_time.setTime(initial_time)
             
             #led button set
-            farm.json_data["led_power"]= False
-            farm.json_data["led_toggle"]= False
-            farm.json_data["led_auto_toggle"]= False
-            farm.json_data["led_state"] = False
+            farm.json_data["ledpower"]= False
+            farm.json_data["ledtoggle"]= False
+            farm.json_data["ledautotoggle"]= False
+            farm.json_data["ledstate"] = False
             self.led_onoff_button.setText("OFF")
             self.led_onoff_button.setChecked(False)
             self.led_onoff_button.setEnabled(False)
@@ -143,16 +143,16 @@ class smartfarm_ui(QDialog):
             self.led_power_button.setEnabled(False)
             
             #water pump time set
-            farm.json_data["wter_pump_start_time"]=0
-            farm.json_data["water_pump_running_time"]=0
+            farm.json_data["wterpumpstarttime"]=0
+            farm.json_data["waterpumprunningtime"]=0
             self.water_start_time.setCurrentIndex(1)
             self.water_running_time.setCurrentIndex(1)
             
             #water pump button set
-            farm.json_data["water_pump_power"] = False
-            farm.json_data["water_pump_toggle"] = False
-            farm.json_data["water_pump_state"] = False
-            farm.json_data["water_pump_auto_toggle"] = False
+            farm.json_data["waterpumppower"] = False
+            farm.json_data["waterpumptoggle"] = False
+            farm.json_data["waterpumpstate"] = False
+            farm.json_data["waterpumpautotoggle"] = False
             self.water_onoff_button.setText("OFF")
             self.water_onoff_button.setChecked(False)
             self.water_onoff_button.setEnabled(False)
@@ -163,18 +163,18 @@ class smartfarm_ui(QDialog):
             self.water_power_button.setEnabled(False)
             
             #fan time set
-            farm.json_data["fan_start_time_value"] = 0
-            farm.json_data["fan_start_minute_value"] = 0
-            farm.json_data["fan_end_time_value"] =0
-            farm.json_data["fan_end_minute_value"] =0
+            farm.json_data["fanstarttimevalue"] = 0
+            farm.json_data["fanstartminutevalue"] = 0
+            farm.json_data["fanendtimevalue"] =0
+            farm.json_data["fanendminutevalue"] =0
             self.fan_auto_start_time.setTime(initial_time)
             self.fan_auto_end_time.setTime(initial_time)
             
             #fan button set
-            farm.json_data["fan_power"] = False
-            farm.json_data["fan_toggle"] = False
-            farm.json_data["fan_auto_toggle"] = False
-            farm.json_data["fan_state"] = False
+            farm.json_data["fanpower"] = False
+            farm.json_data["fantoggle"] = False
+            farm.json_data["fanautotoggle"] = False
+            farm.json_data["fanstate"] = False
             self.fan_onoff_button.setText("OFF")
             self.fan_onoff_button.setChecked(False)
             self.fan_onoff_button.setEnabled(False)
@@ -185,18 +185,18 @@ class smartfarm_ui(QDialog):
             self.fan_power_button.setEnabled(False)
             
             #door time set
-            farm.json_data["door_start_time_value"] = 0
-            farm.json_data["door_start_minute_value"] = 0
-            farm.json_data["door_end_time_value"] = 0
-            farm.json_data["door_end_minute_value"] = 0
+            farm.json_data["doorstarttimevalue"] = 0
+            farm.json_data["doorstartminutevalue"] = 0
+            farm.json_data["doorendtimevalue"] = 0
+            farm.json_data["doorendminutevalue"] = 0
             self.door_auto_start_time.setTime(initial_time)
             self.door_auto_end_time.setTime(initial_time)
             
             #door button set
-            farm.json_data["door_power"] = False
-            farm.json_data["door_toggle"] = False
-            farm.json_data["door_state"] = False
-            farm.json_data["door_auto_toggle"] = False
+            farm.json_data["doorpower"] = False
+            farm.json_data["doortoggle"] = False
+            farm.json_data["doorstate"] = False
+            farm.json_data["doorautotoggle"] = False
             self.door_onoff_button.setText("OFF")
             self.door_onoff_button.setChecked(False)
             self.door_onoff_button.setEnabled(False)
@@ -206,7 +206,7 @@ class smartfarm_ui(QDialog):
             self.door_power_button.setChecked(False)
             self.door_power_button.setEnabled(False)
             
-        elif farm.json_data["remote_power"] == False and self.before_remote_power != farm.json_data["remote_power"]:
+        elif farm.json_data["remotepower"] == False and self.before_remote_power != farm.json_data["remotepower"]:
             self.before_remote_power = False
             self.led_power_button.setEnabled(True)
             self.water_pump_button.setEnabled(True)
@@ -219,52 +219,52 @@ class smartfarm_ui(QDialog):
             
     def door_tab_button(self):
         if self.door_power_button.isChecked() :
-            farm.json_data["door_power"] = True
+            farm.json_data["doorpower"] = True
             self.door_auto_button.setEnabled(True)
             self.door_onoff_button.setEnabled(True)
             self.door_power_button.setText("ON")
             if self.door_onoff_button.isChecked() :
                 self.door_onoff_button.setText("ON")
                 self.door_auto_button.setEnabled(False)
-                farm.json_data["door_toggle"] = True
+                farm.json_data["doortoggle"] = True
             else:
                 self.door_onoff_button.setText("OFF")
                 self.door_auto_button.setEnabled(True)
-                farm.json_data["door_toggle"] = False
+                farm.json_data["doortoggle"] = False
             
             if self.door_auto_button.isChecked() :
                 self.door_onoff_button.setEnabled(False)
-                farm.json_data["door_auto_toggle"] = True
+                farm.json_data["doorautotoggle"] = True
             else:
                 self.door_onoff_button.setEnabled(True)
-                farm.json_data["door_auto_toggle"] = False
+                farm.json_data["doorautotoggle"] = False
         else:
             self.door_auto_button.setEnabled(False)
             self.door_onoff_button.setEnabled(False)
             self.door_power_button.setText("OFF")
-            farm.json_data["door_power"] = False
+            farm.json_data["doorpower"] = False
         
     def fan_tab_button(self):
         if self.fan_power_button.isChecked() :
-            farm.json_data["fan_power"] = True
+            farm.json_data["fanpower"] = True
             self.fan_auto_button.setEnabled(True)
             self.fan_onoff_button.setEnabled(True)
             self.fan_power_button.setText("ON")
             if self.fan_onoff_button.isChecked():
                 self.fan_onoff_button.setText("ON")
                 self.fan_auto_button.setEnabled(False)
-                farm.json_data["fan_toggle"] = True
+                farm.json_data["fantoggle"] = True
             else:
                 self.fan_onoff_button.setText("OFF")
                 self.fan_auto_button.setEnabled(True)
-                farm.json_data["fan_toggle"]=False
+                farm.json_data["fantoggle"]=False
             
             if self.fan_auto_button.isChecked() :
                 self.fan_onoff_button.setEnabled(False)
-                farm.json_data["fan_auto_toggle"] = True
+                farm.json_data["fanautotoggle"] = True
             else:
                 self.fan_onoff_button.setEnabled(True)
-                farm.json_data["fan_auto_toggle"] = False
+                farm.json_data["fanautotoggle"] = False
         else:
             self.fan_auto_button.setChecked(False)
             self.fan_onoff_button.setChecked(False)
@@ -272,58 +272,58 @@ class smartfarm_ui(QDialog):
             self.fan_power_button.setText("OFF")
             self.fan_auto_button.setEnabled(False)
             self.fan_onoff_button.setEnabled(False)
-            farm.json_data["fan_power"] = False
+            farm.json_data["fanpower"] = False
     
     def led_tab_button(self):
         if self.led_power_button.isChecked() :
-            farm.json_data["led_power"] = True
+            farm.json_data["ledpower"] = True
             self.led_auto_button.setEnabled(True)
             self.led_onoff_button.setEnabled(True)
             self.led_power_button.setText("ON")
             if self.led_onoff_button.isChecked() :
                 self.led_onoff_button.setText("ON")
                 self.led_auto_button.setEnabled(False)
-                farm.json_data["led_toggle"] = True
+                farm.json_data["ledtoggle"] = True
             else:
                 self.led_onoff_button.setText("OFF")
                 self.led_auto_button.setEnabled(True)
-                farm.json_data["led_toggle"] = False
+                farm.json_data["ledtoggle"] = False
             if self.led_auto_button.isChecked() :
                 self.led_onoff_button.setEnabled(False)
-                farm.json_data["led_auto_toggle"] = True
+                farm.json_data["ledautotoggle"] = True
             else:
                 self.led_onoff_button.setEnabled(True)
-                farm.json_data["led_auto_toggle"] = False
+                farm.json_data["ledautotoggle"] = False
         else:
             self.led_auto_button.setEnabled(False)
             self.led_onoff_button.setEnabled(False)
             self.led_power_button.setText("OFF")
-            farm.json_data["led_power"] = False
-            farm.json_data["led_toggle"] = False
+            farm.json_data["ledpower"] = False
+            farm.json_data["ledtoggle"] = False
     def water_tab_button(self):
         if self.water_power_button.isChecked() :
-            farm.json_data["water_pump_power"] = True
+            farm.json_data["waterpumppower"] = True
             self.water_power_button.setText("ON")
             self.water_auto_button.setEnabled(True)
             self.water_auto_button.setEnabled(True)
             if self.water_onoff_button.isChecked():
                 self.water_onoff_button.setText("ON")
                 self.water_auto_button.setEnabled(False)
-                farm.json_data["water_pump_toggle"] = True
+                farm.json_data["waterpumptoggle"] = True
             else:
                 self.water_onoff_button.setText("OFF")
-                farm.json_data["water_pump_toggle"] = False
+                farm.json_data["waterpumptoggle"] = False
             if self.water_auto_button.isChecked() :
                 self.water_onoff_button.setEnabled(False)
-                farm.json_data["water_pump_auto_toggle"] = True
+                farm.json_data["waterpumpautotoggle"] = True
             else:
-                farm.json_data["water_pump_auto_toggle"] = False
+                farm.json_data["waterpumpautotoggle"] = False
         else:
             self.water_auto_button.setEnabled(False)
             self.water_onoff_button.setEnabled(False)
             self.water_power_button.setText("OFF")
-            farm.json_data["water_pump_power"] = False
-            farm.json_data["water_pump_toggle"] = False
+            farm.json_data["waterpumppower"] = False
+            farm.json_data["waterpumptoggle"] = False
     
     def display_image(self, label, image_path):
         pixmap = QPixmap(image_path)
@@ -333,24 +333,24 @@ class smartfarm_ui(QDialog):
         self.home_temperature.setText(str(farm.json_data["temperature"]))
         self.home_humidity.setText(str(farm.json_data["humidity"]))
         
-        if farm.json_data["led_state"] == True:
+        if farm.json_data["ledstate"] == True:
             self.home_led_text.setText("현재 작동중입니다.")
-        elif farm.json_data["led_state"] == False:
+        elif farm.json_data["ledstate"] == False:
             self.home_led_text.setText("현재 작동중이지 않습니다.")
             
-        if farm.json_data["water_pump_state"] == True:
+        if farm.json_data["waterpumpstate"] == True:
             self.home_water_text.setText("현재 작동중입니다.")
-        elif farm.json_data["water_pump_state"] == False:
+        elif farm.json_data["waterpumpstate"] == False:
             self.home_water_text.setText("현재 작동중이지 않습니다.")
         
-        if farm.json_data["fan_state"] == True:
+        if farm.json_data["fanstate"] == True:
             self.home_fan_text.setText("현재 작동중입니다.")
-        elif farm.json_data["fan_state"] == False:
+        elif farm.json_data["fanstate"] == False:
             self.home_fan_text.setText("현재 작동중이지 않습니다.")
         
-        if farm.json_data["door_state"] == False:
+        if farm.json_data["doorstate"] == False:
             self.home_door_text.setText("현재 닫혀 있습니다.")
-        elif farm.json_data["door_state"] == True:
+        elif farm.json_data["doorstate"] == True:
             self.home_door_text.setText("현재 열려 있습니다.")
     
 class smartfarm:
@@ -462,73 +462,73 @@ class smartfarm:
         
         
         #json init
-        self.json_data = {"sf_id" : self.sf_id, "temperature": self.temperature, "humidity": self.humidity,
-            "light":self.light, "soil": self.soil, "water_level_voltage":self.water_level_voltage, "water_temperature": self.water_temperature,
-            "water_pump_power" : self.water_pump_power,"water_pump_auto_toggle":self.water_pump_auto_toggle,
-            "water_pump_start_time":self.water_pump_start_time,"water_pump_running_time":self.water_pump_running_time,
-            "water_pump_state" : self.water_pump_state,"water_pump_toggle":self.water_pump_toggle,
-            "led_start_time_value":self.led_start_time_value,"led_start_minute_value":self.led_start_minute_value,
-            "led_end_time_value":self.led_end_time_value,
-            "led_end_minute_value":self.led_end_minute_value,
-            "fan_start_time_value":self.fan_start_time_value,"fan_start_minute_value":self.fan_start_minute_value,
-            "fan_end_time_value":self.fan_end_time_value,"fan_end_minute_value":self.fan_end_minute_value,
-            "led_power":self.led_power,"led_state": self.led_state, 
-            "led_toggle": self.led_toggle,"led_auto_toggle":self.led_auto_toggle, "door_state": self.door_state,
-            "door_toggle": self.door_toggle, "fan_state": self.fan_state,"fan_toggle": self.fan_toggle
-            ,"fan_auto_toggle":self.fan_auto_toggle,"fan_power":self.fan_power,
-            "door_power":self.door_power,"door_auto_toggle":self.door_auto_toggle,
-            "door_start_time_value":self.door_start_time_value,"door_start_minute_value":self.door_start_minute_value,
-            "door_end_time_value":self.door_end_time_value,"door_end_minute_value":self.door_end_minute_value,
-            "water_level_warning":self.water_level_warning,"water_temp_warning":self.water_temp_warning,
-            "temp_warning":self.temp_warning,"hum_warning":self.hum_warning,"soil_warning":self.soil_warning,
-            "remote_power":self.remote_power}
+        self.json_data = {"sfid" : self.sf_id, "temperature": self.temperature, "humidity": self.humidity,
+            "light":self.light, "soil": self.soil, "waterlevelvoltage":self.water_level_voltage, "watertemperature": self.water_temperature,
+            "waterpumppower" : self.water_pump_power,"waterpumpautotoggle":self.water_pump_auto_toggle,
+            "waterpumpstarttime":self.water_pump_start_time,"waterpumprunningtime":self.water_pump_running_time,
+            "waterpumpstate" : self.water_pump_state,"waterpumptoggle":self.water_pump_toggle,
+            "ledstarttimevalue":self.led_start_time_value,"ledstartminutevalue":self.led_start_minute_value,
+            "ledendtimevalue":self.led_end_time_value,
+            "ledendminutevalue":self.led_end_minute_value,
+            "fanstarttimevalue":self.fan_start_time_value,"fanstartminutevalue":self.fan_start_minute_value,
+            "fanendtimevalue":self.fan_end_time_value,"fanendminutevalue":self.fan_end_minute_value,
+            "ledpower":self.led_power,"ledstate": self.led_state, 
+            "ledtoggle": self.led_toggle,"ledautotoggle":self.led_auto_toggle, "doorstate": self.door_state,
+            "doortoggle": self.door_toggle, "fanstate": self.fan_state,"fantoggle": self.fan_toggle
+            ,"fanautotoggle":self.fan_auto_toggle,"fanpower":self.fan_power,
+            "doorpower":self.door_power,"doorautotoggle":self.door_auto_toggle,
+            "doorstarttimevalue":self.door_start_time_value,"doorstartminutevalue":self.door_start_minute_value,
+            "doorendtimevalue":self.door_end_time_value,"doorendminutevalue":self.door_end_minute_value,
+            "waterlevelwarning":self.water_level_warning,"watertempwarning":self.water_temp_warning,
+            "tempwarning":self.temp_warning,"humwarning":self.hum_warning,"soilwarning":self.soil_warning,
+            "remotepower":self.remote_power}
         
     def setServodegree(self):
         while True:
             door_now = datetime.now()
-            if self.json_data["door_power"] == True:
-                if self.json_data["door_auto_toggle"] == True:
-                    if self.json_data["remote_power"] == False:
+            if self.json_data["doorpower"] == True:
+                if self.json_data["doorautotoggle"] == True:
+                    if self.json_data["remotepower"] == False:
                         widget.door_onoff_button.setEnabled(False)
-                    if int(door_now.hour) == self.json_data["door_start_time_value"] and int(door_now.minute) == self.json_data["door_start_minute_value"]:
-                        self.json_data["door_toggle"] = True
+                    if int(door_now.hour) == self.json_data["doorstarttimevalue"] and int(door_now.minute) == self.json_data["doorstartminutevalue"]:
+                        self.json_data["doortoggle"] = True
                         degree = 12
                         duty = self.SERVO_MIN_DUTY + (degree*(self.SERVO_MAX_DUTY - self.SERVO_MIN_DUTY)/180.0)
                         self.servo_pwm.ChangeDutyCycle(duty)
-                        self.json_data["door_state"] = True
-                    elif int(door_now.hour) == self.json_data["door_end_time_value"] and int(door_now.minute) == self.json_data["door_end_minute_value"]:
-                        self.json_data["door_toggle"] = False
+                        self.json_data["doorstate"] = True
+                    elif int(door_now.hour) == self.json_data["doorendtimevalue"] and int(door_now.minute) == self.json_data["doorendminutevalue"]:
+                        self.json_data["doortoggle"] = False
                         degree = 102
                         duty = self.SERVO_MIN_DUTY + (degree*(self.SERVO_MAX_DUTY - self.SERVO_MIN_DUTY)/180.0)
                         self.servo_pwm.ChangeDutyCycle(duty)
-                        self.json_data["door_state"] = False
+                        self.json_data["doorstate"] = False
                 else:
                     widget.door_onoff_button.setEnabled(True)
-                    if self.json_data["door_toggle"] == True:
+                    if self.json_data["doortoggle"] == True:
                         widget.door_auto_button.setEnabled(False)
                         degree = 12
                         duty = self.SERVO_MIN_DUTY + (degree*(self.SERVO_MAX_DUTY - self.SERVO_MIN_DUTY)/180.0)
                         self.servo_pwm.ChangeDutyCycle(duty)
-                        self.json_data["door_state"] = True
+                        self.json_data["doorstate"] = True
                     else:
                         widget.door_auto_button.setEnabled(True)
                         if self.water_temperature > 26.0:
                             degree = 12
                             duty = self.SERVO_MIN_DUTY + (degree*(self.SERVO_MAX_DUTY - self.SERVO_MIN_DUTY)/180.0)
                             self.servo_pwm.ChangeDutyCycle(duty)
-                            self.json_data["door_state"] = True
+                            self.json_data["doorstate"] = True
                         elif self.water_temperature <= 26.0:
                             degree = 102
                             duty = self.SERVO_MIN_DUTY + (degree*(self.SERVO_MAX_DUTY - self.SERVO_MIN_DUTY)/180.0)
                             self.servo_pwm.ChangeDutyCycle(duty)
-                            self.json_data["door_state"] = False
+                            self.json_data["doorstate"] = False
             else:
-                self.json_data["door_toggle"] = False
-                self.json_data["door_state"] = False
+                self.json_data["doortoggle"] = False
+                self.json_data["doorstate"] = False
                 degree = 102
                 duty = self.SERVO_MIN_DUTY + (degree*(self.SERVO_MAX_DUTY - self.SERVO_MIN_DUTY)/180.0)
                 self.servo_pwm.ChangeDutyCycle(duty)
-                if self.json_data["remote_power"] == False:
+                if self.json_data["remotepower"] == False:
                     widget.door_onoff_button.setText("OFF")
                     widget.door_onoff_button.setChecked(False)
                     widget.door_onoff_button.setEnabled(False)
@@ -539,41 +539,41 @@ class smartfarm:
     def fan_control(self):
         while True:
             fan_now = datetime.now()
-            if self.json_data["fan_power"] == True:
-                if self.json_data["fan_auto_toggle"] == True:
-                    if self.json_data["remote_power"] == False:
+            if self.json_data["fanpower"] == True:
+                if self.json_data["fanautotoggle"] == True:
+                    if self.json_data["remotepower"] == False:
                         widget.fan_auto_button.setEnabled(True)
                         widget.fan_onoff_button.setEnabled(False)
-                    if int(fan_now.hour) == self.json_data["fan_start_time_value"] and int(fan_now.minute) == self.json_data["fan_start_minute_value"]:
-                        self.json_data["fan_toggle"] = True
+                    if int(fan_now.hour) == self.json_data["fanstarttimevalue"] and int(fan_now.minute) == self.json_data["fanstartminutevalue"]:
+                        self.json_data["fantoggle"] = True
                         self.fan_pwm.ChangeDutyCycle(100)
-                        self.json_data["fan_state"] = True
-                    elif int(fan_now.hour) == self.json_data["fan_end_time_value"] and int(fan_now.minute) == self.json_data["fan_end_minute_value"]:
-                        self.json_data["fan_toggle"] = False
+                        self.json_data["fanstate"] = True
+                    elif int(fan_now.hour) == self.json_data["fanendtimevalue"] and int(fan_now.minute) == self.json_data["fanendminutevalue"]:
+                        self.json_data["fantoggle"] = False
                         self.fan_pwm.ChangeDutyCycle(0)
-                        self.json_data["fan_state"] = False
+                        self.json_data["fanstate"] = False
                 else:
-                    if self.json_data["fan_toggle"] == True:
-                        if self.json_data["remote_power"] == False:
+                    if self.json_data["fantoggle"] == True:
+                        if self.json_data["remotepower"] == False:
                             widget.fan_onoff_button.setEnabled(True)
                             widget.fan_auto_button.setEnabled(False)
                         self.fan_pwm.ChangeDutyCycle(100)
-                        self.json_data["fan_state"] = True
+                        self.json_data["fanstate"] = True
                     else:
-                        if self.json_data["remote_power"] == False:
+                        if self.json_data["remotepower"] == False:
                             widget.fan_onoff_button.setEnabled(True)
                             widget.fan_auto_button.setEnabled(True)
                         if self.water_temperature > 26.0:
                             self.fan_pwm.ChangeDutyCycle(100)
-                            self.json_data["fan_state"] = True
+                            self.json_data["fanstate"] = True
                         elif self.water_temperature <= 26.0:
                             self.fan_pwm.ChangeDutyCycle(0)
-                            self.json_data["fan_state"] = False
+                            self.json_data["fanstate"] = False
             else:
                 self.fan_pwm.ChangeDutyCycle(0)
-                self.json_data["fan_state"] = False
-                self.json_data["fan_toggle"] = False
-                if self.json_data["remote_power"] == False:
+                self.json_data["fanstate"] = False
+                self.json_data["fantoggle"] = False
+                if self.json_data["remotepower"] == False:
                     widget.fan_onoff_button.setText("OFF")
                     widget.fan_onoff_button.setChecked(False)
                     widget.fan_onoff_button.setEnabled(False)
@@ -584,65 +584,65 @@ class smartfarm:
     def water_pump_control(self):
         while True:
             now_water_time = datetime.now()
-            if self.json_data["water_pump_power"] == True:
+            if self.json_data["waterpumppower"] == True:
                 #if self.json_data["remote_power"] == False:
                     #widget.water_auto_button.setEnabled(True)
                     #widget.water_onoff_button.setEnabled(True)
-                if self.json_data["water_pump_auto_toggle"] == True:
+                if self.json_data["waterpumpautotoggle"] == True:
                     if self.before_water_auto_toggle == False:
                         this_water_time = datetime.now()
                         self.before_water_auto_toggle = True
                     widget.water_onoff_button.setEnabled(False)
-                    if int(now_water_time.minute) == int(this_water_time.minute) + self.json_data["water_pump_start_time"]:
-                        self.json_data["water_pump_state"] = True
-                        self.json_data["water_pump_toggle"] = True
+                    if int(now_water_time.minute) == int(this_water_time.minute) + self.json_data["waterpumpstarttime"]:
+                        self.json_data["waterpumpstate"] = True
+                        self.json_data["waterpumptoggle"] = True
                         self.water_pump_pwm.ChangeDutyCycle(100)
                         widget.water_onoff_button.setEnabled(False)
-                        time.sleep(self.json_data["water_pump_running_time"])
+                        time.sleep(self.json_data["waterpumprunningtime"])
                         self.water_pump_pwm.ChangeDutyCycle(0)
-                        self.json_data["water_pump_state"] = False
-                        self.json_data["water_pump_toggle"] = False
+                        self.json_data["waterpumpstate"] = False
+                        self.json_data["waterpumptoggle"] = False
                         this_water_time = datetime.now()
                         widget.water_onoff_button.setEnabled(True)
                         
                 else:
                     self.before_water_auto_toggle = False
-                    if self.json_data["remote_power"] == False:
+                    if self.json_data["remotepower"] == False:
                         widget.water_onoff_button.setEnabled(True)
-                    if self.json_data["water_pump_toggle"] == True:
-                        if self.json_data["remote_power"] == False:
+                    if self.json_data["waterpumptoggle"] == True:
+                        if self.json_data["remotepower"] == False:
                             widget.water_auto_button.setEnabled(False)
-                        self.json_data["water_pump_state"] = True
+                        self.json_data["waterpumpstate"] = True
                         self.water_pump_pwm.ChangeDutyCycle(100)
                         widget.water_onoff_button.setEnabled(False)
-                        if self.json_data["water_pump_running_time"] >0:
-                            time.sleep(self.json_data["water_pump_running_time"])
+                        if self.json_data["waterpumprunningtime"] >0:
+                            time.sleep(self.json_data["waterpumprunningtime"])
                             self.water_pump_pwm.ChangeDutyCycle(0)
-                            self.json_data["water_pump_state"] = False
-                            self.json_data["water_pump_toggle"] = False
-                            if self.json_data["remote_power"] == False:
+                            self.json_data["waterpumpstate"] = False
+                            self.json_data["waterpumptoggle"] = False
+                            if self.json_data["remotepower"] == False:
                                 widget.water_onoff_button.setChecked(False)
                                 widget.water_onoff_button.setText("OFF")
                                 widget.water_auto_button.setEnabled(True)
                         else:
                             time.sleep(8)
                             self.water_pump_pwm.ChangeDutyCycle(0)
-                            self.json_data["water_pump_state"] = False
-                            self.json_data["water_pump_toggle"] = False
-                            if self.json_data["remote_power"] == False:
+                            self.json_data["waterpumpstate"] = False
+                            self.json_data["waterpumptoggle"] = False
+                            if self.json_data["remotepower"] == False:
                                 widget.water_onoff_button.setChecked(False)
                                 widget.water_onoff_button.setText("OFF")
                                 widget.water_auto_button.setEnabled(True)
                     else:
-                        if self.json_data["remote_power"] == False:
+                        if self.json_data["remotepower"] == False:
                             widget.water_auto_button.setEnabled(True)
                             widget.water_onoff_button.setEnabled(True)
             else:
                 self.water_pump_pwm.ChangeDutyCycle(0)
-                self.json_data["water_pump_state"] = False
-                self.json_data["water_pump_toggle"] = False
-                self.json_data["water_pump_auto_toggle"] = False
-                if self.json_data["remote_power"] == False:
+                self.json_data["waterpumpstate"] = False
+                self.json_data["waterpumptoggle"] = False
+                self.json_data["waterpumpautotoggle"] = False
+                if self.json_data["remotepower"] == False:
                     widget.water_onoff_button.setChecked(False)
                     widget.water_onoff_button.setText("OFF")
                     widget.water_onoff_button.setEnabled(False)
@@ -652,29 +652,29 @@ class smartfarm:
     def led_control(self):
         while True:
             now = datetime.now()
-            if self.json_data["led_power"] == True:
-                if self.json_data["led_auto_toggle"] == True:
-                    if int(now.hour) == self.json_data["led_start_time_value"]and int(now.minute)==self.json_data["led_start_minute_value"]:
-                        self.json_data["led_toggle"] = 1
+            if self.json_data["ledpower"] == True:
+                if self.json_data["ledautotoggle"] == True:
+                    if int(now.hour) == self.json_data["ledstarttimevalue"]and int(now.minute)==self.json_data["ledstartminutevalue"]:
+                        self.json_data["ledtoggle"] = 1
                         self.led_pwm.ChangeDutyCycle(0)
-                        self.json_data["led_state"] = True
-                    elif int(now.hour) == self.json_data["led_end_time_value"]and int(now.minute)==self.json_data["led_end_minute_value"]:
-                        self.json_data["led_toggle"] = 0
+                        self.json_data["ledstate"] = True
+                    elif int(now.hour) == self.json_data["ledendtimevalue"]and int(now.minute)==self.json_data["ledendminutevalue"]:
+                        self.json_data["ledtoggle"] = 0
                         self.led_pwm.ChangeDutyCycle(100)
-                        self.json_data["led_state"] = False
+                        self.json_data["ledstate"] = False
                 else:            
-                    if self.json_data["led_toggle"] == True:
+                    if self.json_data["ledtoggle"] == True:
                         self.led_pwm.ChangeDutyCycle(0)
-                        self.json_data["led_state"] = True
-                    elif self.json_data["led_toggle"] == False:
+                        self.json_data["ledstate"] = True
+                    elif self.json_data["ledtoggle"] == False:
                         self.led_pwm.ChangeDutyCycle(100)
-                        self.json_data["led_state"] = False
+                        self.json_data["ledstate"] = False
             else:
                 self.led_pwm.ChangeDutyCycle(100)
-                self.json_data["led_state"] = False
-                self.json_data["led_toggle"] = False
-                self.json_data["led_auto_toggle"] = False
-                if self.json_data["remote_power"] == False:
+                self.json_data["ledstate"] = False
+                self.json_data["ledtoggle"] = False
+                self.json_data["ledautotoggle"] = False
+                if self.json_data["remotepower"] == False:
                     widget.led_onoff_button.setText("OFF")
                     widget.led_onoff_button.setChecked(False)
                     widget.led_auto_button.setChecked(False)
@@ -702,19 +702,19 @@ class smartfarm:
         while True:
             #water level sensor 
             self.water_level_voltage = int(self.water_level_read(self.mcp3008_ch2)*10)/10.0
-            self.json_data["water_level_voltage"] = self.water_level_voltage
-            if self.json_data["water_level_voltage"] <=1.0:
-                self.json_data["water_level_warning"] = "스마트팜 외부 수조의 물이 부족합니다"
+            self.json_data["waterlevelvoltage"] = self.water_level_voltage
+            if self.json_data["waterlevelvoltage"] <=1.0:
+                self.json_data["waterlevelwarning"] = "스마트팜 외부 수조의 물이 부족합니다"
             else:
-                self.json_data["water_level_warning"] = ""
+                self.json_data["waterlevelwarning"] = ""
                 
             #soil sensor call
             self.soil = int((self.soil_read(self.mcp3008_ch1))*10)/10.0
             self.json_data["soil"] = self.soil
             if self.json_data["soil"] <= 10:
-                self.json_data["soil_warning"] = "스마트팜 내부의 흙이 건조합니다"
+                self.json_data["soilwarning"] = "스마트팜 내부의 흙이 건조합니다"
             else:
-                self.json_data["soil_warning"] = ""
+                self.json_data["soilwarning"] = ""
             
             
             #light sensor call
@@ -723,11 +723,11 @@ class smartfarm:
             
             #watertemp read
             self.water_temperature = int(self.watertemp_sensor_pin.get_temperature()*10)/10.0
-            self.json_data["water_temperature"] = self.water_temperature
-            if self.json_data["water_temperature"] >= 40:
-                self.json_data["water_temp_warning"] = "스마트팜 외부 수조의 수온이 너무 높습니다"
+            self.json_data["watertemperature"] = self.water_temperature
+            if self.json_data["watertemperature"] >= 40:
+                self.json_data["watertempwarning"] = "스마트팜 외부 수조의 수온이 너무 높습니다"
             else:
-                self.json_data["water_temp_warning"] = ""
+                self.json_data["watertempwarning"] = ""
                 
             
             #dht sensor read
@@ -735,22 +735,24 @@ class smartfarm:
             self.json_data["humidity"] = (self.humidity)
             self.json_data["temperature"] = (self.temperature)
             if self.json_data["humidity"] >= 90:
-                self.json_data["hum_warning"] = "스마트팜 내부 습도가 너무 높습니다"
+                self.json_data["humwarning"] = "스마트팜 내부 습도가 너무 높습니다"
             else:
-                self.json_data["hum_warning"] = ""
+                self.json_data["humwarning"] = ""
             
             if self.json_data["temperature"] >= 35.0:
-                self.json_data["temp_warning"] = "스마트팜 내부 온도가 너무 높습니다"
+                self.json_data["tempwarning"] = "스마트팜 내부 온도가 너무 높습니다"
             else:
-                self.json_data["temp_warning"] =""
+                self.json_data["tempwarning"] =""
             
-            #response = requests.post("http://203.230.102.75:10924/farm/inf",json=self.json_data)
+            #send data
+            response = requests.post("http://203.230.102.75:10924/farm/raspberry",json=self.json_data)
             #response = requests.post("http://192.168.0.156:5000/")
-            print(self.json_data)
+            #print(self.json_data)
             #self.json_data = response.json()
             #print(self.json_data)
-
-            #self.json_data = requests.get("http://203.230.102.75:10924/farm/inf",json=self.json_data).json()
+            print(response)
+            #receive data
+            #self.json_data = requests.get("http://203.230.102.75:10924/farm/raspberry",json=self.json_data).json()
             #print(self.json_data)
 
 farm = smartfarm()

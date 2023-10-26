@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>708</width>
-    <height>480</height>
+    <height>619</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <x>-10</x>
      <y>0</y>
      <width>800</width>
-     <height>480</height>
+     <height>420</height>
     </rect>
    </property>
    <property name="currentIndex">
@@ -33,7 +33,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>120</y>
+       <y>70</y>
        <width>800</width>
        <height>16</height>
       </rect>
@@ -46,7 +46,7 @@
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>20</y>
+       <y>0</y>
        <width>111</width>
        <height>41</height>
       </rect>
@@ -65,7 +65,7 @@
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>80</y>
+       <y>40</y>
        <width>111</width>
        <height>41</height>
       </rect>
@@ -84,7 +84,7 @@
      <property name="geometry">
       <rect>
        <x>350</x>
-       <y>20</y>
+       <y>0</y>
        <width>31</width>
        <height>41</height>
       </rect>
@@ -97,7 +97,7 @@
      <property name="geometry">
       <rect>
        <x>350</x>
-       <y>80</y>
+       <y>40</y>
        <width>31</width>
        <height>41</height>
       </rect>
@@ -110,7 +110,7 @@
      <property name="geometry">
       <rect>
        <x>290</x>
-       <y>20</y>
+       <y>0</y>
        <width>41</width>
        <height>41</height>
       </rect>
@@ -123,7 +123,7 @@
      <property name="geometry">
       <rect>
        <x>290</x>
-       <y>80</y>
+       <y>40</y>
        <width>41</width>
        <height>41</height>
       </rect>
@@ -139,9 +139,9 @@
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>140</y>
+       <y>90</y>
        <width>80</width>
-       <height>60</height>
+       <height>50</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -154,7 +154,7 @@
       <enum>Qt::AutoText</enum>
      </property>
      <property name="pixmap">
-      <pixmap resource="resources.qrc">:/icon/bulb.png</pixmap>
+      <pixmap>:/icon/bulb.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -170,9 +170,9 @@
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>220</y>
+       <y>170</y>
        <width>80</width>
-       <height>60</height>
+       <height>50</height>
       </rect>
      </property>
      <property name="text">
@@ -182,7 +182,7 @@
       <enum>Qt::AutoText</enum>
      </property>
      <property name="pixmap">
-      <pixmap resource="resources.qrc">:/icon/raindrops.png</pixmap>
+      <pixmap>:/icon/raindrops.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -195,9 +195,9 @@
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>380</y>
+       <y>320</y>
        <width>80</width>
-       <height>60</height>
+       <height>50</height>
       </rect>
      </property>
      <property name="text">
@@ -207,7 +207,7 @@
       <enum>Qt::AutoText</enum>
      </property>
      <property name="pixmap">
-      <pixmap resource="resources.qrc">:/icon/door.png</pixmap>
+      <pixmap>:/icon/door.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -220,9 +220,9 @@
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>300</y>
+       <y>245</y>
        <width>80</width>
-       <height>60</height>
+       <height>50</height>
       </rect>
      </property>
      <property name="text">
@@ -232,7 +232,7 @@
       <enum>Qt::AutoText</enum>
      </property>
      <property name="pixmap">
-      <pixmap resource="resources.qrc">:/icon/wind.png</pixmap>
+      <pixmap>:/icon/wind.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -245,7 +245,7 @@
      <property name="geometry">
       <rect>
        <x>140</x>
-       <y>150</y>
+       <y>80</y>
        <width>70</width>
        <height>25</height>
       </rect>
@@ -264,7 +264,7 @@
      <property name="geometry">
       <rect>
        <x>140</x>
-       <y>230</y>
+       <y>160</y>
        <width>100</width>
        <height>25</height>
       </rect>
@@ -286,7 +286,7 @@
      <property name="geometry">
       <rect>
        <x>140</x>
-       <y>310</y>
+       <y>240</y>
        <width>100</width>
        <height>25</height>
       </rect>
@@ -308,7 +308,7 @@
      <property name="geometry">
       <rect>
        <x>140</x>
-       <y>390</y>
+       <y>320</y>
        <width>100</width>
        <height>25</height>
       </rect>
@@ -330,7 +330,7 @@
      <property name="geometry">
       <rect>
        <x>160</x>
-       <y>180</y>
+       <y>110</y>
        <width>271</width>
        <height>22</height>
       </rect>
@@ -343,7 +343,7 @@
      <property name="geometry">
       <rect>
        <x>160</x>
-       <y>260</y>
+       <y>190</y>
        <width>271</width>
        <height>22</height>
       </rect>
@@ -356,7 +356,7 @@
      <property name="geometry">
       <rect>
        <x>160</x>
-       <y>340</y>
+       <y>270</y>
        <width>271</width>
        <height>22</height>
       </rect>
@@ -369,7 +369,7 @@
      <property name="geometry">
       <rect>
        <x>160</x>
-       <y>420</y>
+       <y>350</y>
        <width>271</width>
        <height>22</height>
       </rect>
@@ -552,8 +552,8 @@
     <widget class="QLabel" name="label_17">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>30</y>
+       <x>40</x>
+       <y>20</y>
        <width>95</width>
        <height>30</height>
       </rect>
@@ -569,7 +569,7 @@
      <property name="geometry">
       <rect>
        <x>420</x>
-       <y>30</y>
+       <y>20</y>
        <width>91</width>
        <height>30</height>
       </rect>
@@ -581,8 +581,8 @@
     <widget class="QLabel" name="label_18">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>110</y>
+       <x>40</x>
+       <y>70</y>
        <width>95</width>
        <height>30</height>
       </rect>
@@ -598,7 +598,7 @@
      <property name="geometry">
       <rect>
        <x>420</x>
-       <y>110</y>
+       <y>70</y>
        <width>91</width>
        <height>30</height>
       </rect>
@@ -610,8 +610,8 @@
     <widget class="QCheckBox" name="water_auto_button">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>190</y>
+       <x>50</x>
+       <y>160</y>
        <width>120</width>
        <height>28</height>
       </rect>
@@ -624,7 +624,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>230</y>
+       <y>210</y>
        <width>81</width>
        <height>30</height>
       </rect>
@@ -640,7 +640,7 @@
      <property name="geometry">
       <rect>
        <x>360</x>
-       <y>230</y>
+       <y>210</y>
        <width>111</width>
        <height>30</height>
       </rect>
@@ -656,7 +656,7 @@
      <property name="geometry">
       <rect>
        <x>50</x>
-       <y>230</y>
+       <y>210</y>
        <width>86</width>
        <height>30</height>
       </rect>
@@ -906,7 +906,7 @@
      <property name="geometry">
       <rect>
        <x>270</x>
-       <y>230</y>
+       <y>210</y>
        <width>86</width>
        <height>30</height>
       </rect>
@@ -987,6 +987,19 @@
       </property>
      </item>
     </widget>
+    <widget class="Line" name="line_3">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>140</y>
+       <width>800</width>
+       <height>3</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
@@ -995,8 +1008,8 @@
     <widget class="QLabel" name="label_13">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>30</y>
+       <x>40</x>
+       <y>20</y>
        <width>95</width>
        <height>30</height>
       </rect>
@@ -1011,8 +1024,8 @@
     <widget class="QLabel" name="label_14">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>120</y>
+       <x>40</x>
+       <y>70</y>
        <width>95</width>
        <height>30</height>
       </rect>
@@ -1028,7 +1041,7 @@
      <property name="geometry">
       <rect>
        <x>420</x>
-       <y>30</y>
+       <y>20</y>
        <width>91</width>
        <height>30</height>
       </rect>
@@ -1041,7 +1054,7 @@
      <property name="geometry">
       <rect>
        <x>420</x>
-       <y>120</y>
+       <y>70</y>
        <width>91</width>
        <height>30</height>
       </rect>
@@ -1053,8 +1066,8 @@
     <widget class="QCheckBox" name="fan_auto_button">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>220</y>
+       <x>50</x>
+       <y>160</y>
        <width>120</width>
        <height>28</height>
       </rect>
@@ -1067,7 +1080,7 @@
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>280</y>
+       <y>220</y>
        <width>160</width>
        <height>30</height>
       </rect>
@@ -1083,7 +1096,7 @@
      <property name="geometry">
       <rect>
        <x>410</x>
-       <y>280</y>
+       <y>220</y>
        <width>120</width>
        <height>30</height>
       </rect>
@@ -1106,7 +1119,7 @@
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>350</y>
+       <y>290</y>
        <width>160</width>
        <height>30</height>
       </rect>
@@ -1122,7 +1135,7 @@
      <property name="geometry">
       <rect>
        <x>410</x>
-       <y>350</y>
+       <y>290</y>
        <width>120</width>
        <height>30</height>
       </rect>
@@ -1141,6 +1154,19 @@
       <string>h:mm</string>
      </property>
     </widget>
+    <widget class="Line" name="line_4">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>140</y>
+       <width>800</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">
@@ -1149,8 +1175,8 @@
     <widget class="QLabel" name="label_21">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>30</y>
+       <x>40</x>
+       <y>20</y>
        <width>95</width>
        <height>30</height>
       </rect>
@@ -1165,8 +1191,8 @@
     <widget class="QLabel" name="label_22">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>120</y>
+       <x>40</x>
+       <y>70</y>
        <width>95</width>
        <height>30</height>
       </rect>
@@ -1181,8 +1207,8 @@
     <widget class="QCheckBox" name="door_auto_button">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>220</y>
+       <x>50</x>
+       <y>160</y>
        <width>120</width>
        <height>28</height>
       </rect>
@@ -1195,7 +1221,7 @@
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>280</y>
+       <y>220</y>
        <width>160</width>
        <height>30</height>
       </rect>
@@ -1211,7 +1237,7 @@
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>350</y>
+       <y>290</y>
        <width>160</width>
        <height>30</height>
       </rect>
@@ -1227,7 +1253,7 @@
      <property name="geometry">
       <rect>
        <x>420</x>
-       <y>30</y>
+       <y>20</y>
        <width>91</width>
        <height>30</height>
       </rect>
@@ -1240,7 +1266,7 @@
      <property name="geometry">
       <rect>
        <x>420</x>
-       <y>120</y>
+       <y>70</y>
        <width>91</width>
        <height>30</height>
       </rect>
@@ -1253,7 +1279,7 @@
      <property name="geometry">
       <rect>
        <x>410</x>
-       <y>280</y>
+       <y>220</y>
        <width>120</width>
        <height>30</height>
       </rect>
@@ -1276,7 +1302,7 @@
      <property name="geometry">
       <rect>
        <x>410</x>
-       <y>350</y>
+       <y>290</y>
        <width>120</width>
        <height>30</height>
       </rect>
@@ -1293,6 +1319,19 @@
      </property>
      <property name="displayFormat">
       <string>h:mm</string>
+     </property>
+    </widget>
+    <widget class="Line" name="line_5">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>140</y>
+       <width>800</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </widget>
