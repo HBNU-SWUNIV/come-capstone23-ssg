@@ -51,6 +51,9 @@
 <br/>
 
 ### 시스템 구성도
+  <p align="center">
+    <img src="https://github.com/HBNU-SWUNIV/come-capstone23-ssg/assets/96428770/ab160cc2-c50d-43c7-aa5c-73f1d7f44e05" width="750px" height="400px">
+  </p>
 
 <br/>
 
@@ -88,12 +91,27 @@
     - 센싱 데이터를 기반한 알림 기능: 스마트팜 내부 환경에 대한 센싱 데이터를 기반하여 스마트팜 내부 환경 문제를 판별한 후, 사용자에게 알린다.
   - #### 🌱 작물 생장 모니터링
     : 카메라를 통해 촬영한 RGB 이미지를 CycleGAN을 활용하여 NIR(Near-Infrared Spectrometer) 이미지로 변환한다. RGB 이미지와 생성한 NIR 이미지를 토대로 NDVI를 추정하여 사용자에게 제공한다.
+      
+    |RGB 이미지|NIR 이미지|NDVI 이미지|
+    |:---:|:---:|:---:|
+    |<img src="https://github.com/HBNU-SWUNIV/come-capstone23-ssg/assets/96428770/a98df898-0cd8-4054-ad3a-2bdd47e6ac76" width="200px" height="200px">|<img src="https://github.com/HBNU-SWUNIV/come-capstone23-ssg/assets/96428770/1ffaa80d-3241-4e66-b268-6f269b0921b0" width="200px" height="200px">|<img src="https://github.com/HBNU-SWUNIV/come-capstone23-ssg/assets/96428770/1bc87d85-348a-41b8-ad23-6a3a19621bf3" width="200px" height="200px">|
+
   - #### 🌐 웹&앱
     - 작물 생장 상태 확인 기능: NDVI 값을 통해 작물 생장 상태를 확인한다.
     - 스마트팜 내부 환경 정보 확인 기능: 스마트팜 내부 환경 정보를 확인한다.
     - 스마트팜 시스템 제어 기능: 스마트팜 시스템인 LED, 관수 시스템, 환기팬, 중앙문을 원격으로 제어한다.
     - 스마트팜 내부 환경 문제 푸시 알림 기능: 스마트팜 내부 환경 문제 발생 시 사용자에게 푸시 알림으로 즉각 알린다.
-
+      
+      - 웹 화면
+        <p align="center">
+          <img src="https://github.com/HBNU-SWUNIV/come-capstone23-ssg/assets/96428770/796dcdf4-838d-4dfb-b7bf-39aaf96d97a2" width="600px" height="325px">
+          <img src="https://github.com/HBNU-SWUNIV/come-capstone23-ssg/assets/96428770/25e58663-2649-4a7c-94e9-b745fc87f1ea" width="600px" height="325px">
+        </p>
+      - 앱 화면
+        <p align="center">
+          <img src="https://github.com/HBNU-SWUNIV/come-capstone23-ssg/assets/96428770/61d3a5fb-5f5a-46f5-8517-0520bf7c15dd" width="280px" height="500px">
+          <img src="https://github.com/HBNU-SWUNIV/come-capstone23-ssg/assets/96428770/4b412328-ec2a-426b-ba00-2fa971bdb456" width="280px" height="500px">
+        </p>
 
 <br/><br/>
 
