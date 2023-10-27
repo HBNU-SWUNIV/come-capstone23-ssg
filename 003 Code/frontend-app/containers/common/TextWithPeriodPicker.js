@@ -1,0 +1,30 @@
+import React, { useState } from 'react';
+import TextWithPeriodPickerComponent from '../../components/common/TextWithPeriodPicker';
+
+function TextWithPeriodPicker({
+    name,
+    workTime,
+    periodNumbers,
+    disabled,
+    onChange
+}) {
+    const [index, setIndex] = useState(0);
+
+    const onIndexChange = (index) => {
+        setIndex(index);
+        onChange(periodNumbers[index]);
+    };
+
+    return (
+        <TextWithPeriodPickerComponent
+            name={name}
+            index={index}
+            workTime={workTime}
+            periodNumbers={periodNumbers}
+            disabled={disabled}
+            onChange={onIndexChange}
+        />
+    );
+}
+
+export default React.memo(TextWithPeriodPicker);
