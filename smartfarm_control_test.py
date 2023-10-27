@@ -462,7 +462,7 @@ class smartfarm:
         
         
         #json init
-        self.json_data = {"sfid" : self.sf_id, "temperature": self.temperature, "humidity": self.humidity,
+        self.json_data = {"smartfarm":"ABC123","temperature": self.temperature, "humidity": self.humidity,
             "light":self.light, "soil": self.soil, "waterlevelvoltage":self.water_level_voltage, "watertemperature": self.water_temperature,
             "waterpumppower" : self.water_pump_power,"waterpumpautotoggle":self.water_pump_auto_toggle,
             "waterpumpstarttime":self.water_pump_start_time,"waterpumprunningtime":self.water_pump_running_time,
@@ -745,15 +745,16 @@ class smartfarm:
                 self.json_data["tempwarning"] =""
             
             #send data
-            response = requests.post("http://203.230.102.75:10924/farm/raspberry",json=self.json_data)
+            headers = {'Authorization': "Token 0deb81b0bcfde92b7b2e05ddaf9daf82fa20c2e1"}
+            response = requests.post("http://203.230.102.75:10924/farm/raspberry",headers=headers,json=self.json_data)
             #response = requests.post("http://192.168.0.156:5000/")
             #print(self.json_data)
             #self.json_data = response.json()
             #print(self.json_data)
             print(response)
             #receive data
-            #self.json_data = requests.get("http://203.230.102.75:10924/farm/raspberry",json=self.json_data).json()
-            #print(self.json_data)
+            self.json_data = requests.get("http://203.230.102.75:10924/farm/raspberry",headers=headers,json=self.json_data).json()
+            print(self.json_data)
 
 farm = smartfarm()
 widget = None

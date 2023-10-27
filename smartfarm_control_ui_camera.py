@@ -4,7 +4,6 @@ import threading
 import requests
 from w1thermsensor import W1ThermSensor
 from datetime import datetime
-import schedule
 
 
 import Adafruit_DHT
@@ -772,14 +771,14 @@ class smartfarm:
             else:
                 self.json_data["temp_warning"] =""
             
-            #response = requests.post("http://203.230.100.170:10095/",json=self.json_data)
+            response = requests.post("http://203.230.102.75:10924/farm/raspberry",json=self.json_data)
             #response = requests.post("http://192.168.0.156:5000/")
             #print(self.json_data)
             #self.json_data = response.json()
             print(self.json_data)
             #print(type(response.json()))
 
-            #self.json_data = requests.get("http://203.230.100.170:10095/",json=self.json_data)
+            self.json_data = requests.get("http://203.230.102.75:10924/farm/raspberry",json=self.json_data)
 
 farm = smartfarm()
 widget = None
