@@ -1,9 +1,19 @@
+<<<<<<< HEAD
+=======
+import os
+>>>>>>> 722d87b3e4e0b17b736cd40cc992194e343b3cf3
 from urllib import response
 from django.shortcuts import render
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
+<<<<<<< HEAD
+=======
+from django.conf import settings
+from django.http import JsonResponse
+
+>>>>>>> 722d87b3e4e0b17b736cd40cc992194e343b3cf3
 from .forms import UploadImageForm
 
 from .models import SmartFarmCrop, UploadImage
@@ -112,6 +122,7 @@ def upload_image(request):
             return Response({'message': '이미지가 성공적으로 업로드되었습니다.'}, status=200)
         upload = request.FILES.get('file')
         if upload:
+<<<<<<< HEAD
             with open(f'/uploads/{upload}', 'wb+') as destination:
                 for chunk in upload.chunks():
                     destination.write(chunk)
@@ -121,6 +132,21 @@ def upload_image(request):
         return Response({'error': '잘못된 요청입니다.'}, status=400)
 
       
+=======
+            with open(os.path.join(settings.MEDIA_ROOT, upload.name), 'wb+') as destination:
+            # with open(f'/uploads/{upload}', 'wb+') as destination:
+                for chunk in upload.chunks():
+                    destination.write(chunk)
+
+            image_url = f"{settings.MEDIA_URL}{upload.name}"
+
+            return JsonResponse({'message': '이미지가 성공적으로 업로드되었습니다.', 'image_url': image_url}, status=200)
+            # return Response({'message': '이미지가 성공적으로 업로드되었습니다.'}, status=200)
+    else:
+        return Response({'error': '잘못된 요청입니다.'}, status=400)
+
+
+>>>>>>> 722d87b3e4e0b17b736cd40cc992194e343b3cf3
     
 
     # def nir_to_ndvi(rgb_img, nir_img):
