@@ -10,6 +10,7 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import IconButtonWithTooltip from '../common/IconButtonWithTooltip';
 
 const AppBar = ({
+    name,
     text,
     children,
     onLogOutClick,
@@ -41,6 +42,17 @@ const AppBar = ({
                 <IconButtonWithTooltip title='로그아웃' onClick={onLogOutClick}>
                     <LogoutRoundedIcon sx={{ fontSize: 36 }}/>
                 </IconButtonWithTooltip>
+                <Typography
+                    component="h3"
+                    sx={{
+                        marginLeft: 1,
+                        fontWeight: 'bold',
+                        color: '#000000',
+                        textAlign: 'center'
+                    }}
+                >
+                    {name}
+                </Typography>
             </Stack>
             <Typography
                 component="h1"
@@ -49,12 +61,12 @@ const AppBar = ({
                     fontWeight: 'bold',
                     color: '#000000',
                     textAlign: 'center',
-                    width: 260
+                    width: 316.46
                 }}
             >
                 {text}
             </Typography>
-            <div style={{ width: 260 }}>
+            <div style={{ width: 316.46 }}>
                 {children}
             </div>
         </Stack>

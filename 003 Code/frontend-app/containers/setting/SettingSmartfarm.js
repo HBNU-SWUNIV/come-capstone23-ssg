@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import SettingSmartfarmComponent from '../../components/setting/SettingSmartfarm';
@@ -7,6 +7,7 @@ import {
     modifySmartfarmInitialize,
     removeSmartfarmInitialize,
     checkSmartfarmNumber,
+    getSmartfarm,
     modifySmartfarm,
     removeSmartfarm
 } from '../../slices/smartfarm/smartfarm';
@@ -55,6 +56,10 @@ function SettingSmartfarm() {
         navigation.pop();
         clear();
     };
+
+    useEffect(() => {
+        dispatch(getSmartfarm(token));
+    }, [dispatch, token]);
 
     useEffect(() => {
         if (removeSmartfarmSuccess) {

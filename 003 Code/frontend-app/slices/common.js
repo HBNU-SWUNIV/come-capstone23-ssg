@@ -5,7 +5,9 @@ const initialState = {
     showPassword: false,
     showSnackbar: false,
     
-    errorMessage: null
+    errorMessage: null,
+
+    success: false
 };
 
 const commonSlice = createSlice({
@@ -21,6 +23,10 @@ const commonSlice = createSlice({
         },
         clearErrorMessage(state) {
             state.errorMessage = null
+            state.success = false
+        },
+        success(state) {
+            state.success = true
         }
     }
 });
@@ -46,5 +52,6 @@ export default commonSlice.reducer;
 export const {
     showSnackbar,
     unshowSnackbar,
-    clearErrorMessage
+    clearErrorMessage,
+    success
 } = commonSlice.actions;

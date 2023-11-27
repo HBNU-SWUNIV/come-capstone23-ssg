@@ -1,8 +1,7 @@
 // SERVER: 서버로 작물 수정 요청
 
-import { Grid, Stack, Typography, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material';
+import { Stack, Typography, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material';
 import TextFieldDefault from '../common/TextFieldDefault';
-import TextFieldWithButton from '../common/TextFieldWithButton';
 import SelectAutoWidth from '../common/SelectAutoWidth';
 import ButtonDefault from '../common/ButtonDefault';
 
@@ -25,20 +24,13 @@ const SettingPlant = ({
     ];
 
     return (
-        <div style={{ marginTop: 32 }}>
-            <Grid container rowSpacing={3}>
-                <TextFieldDefault
-                    label="이름"
-                    autoFocus={true}
-                    value={name}
-                    onChange={onNameChange}
-                />
-                <TextFieldWithButton
-                        textFieldLabel="작물 품종"
-                        buttonDisabled={true}
-                        buttonText="검색"
-                />
-            </Grid>
+        <div style={{ marginTop: 32, width: '100%' }}>
+            <TextFieldDefault
+                label="이름"
+                autoFocus={true}
+                value={name}
+                onChange={onNameChange}
+            />
             <Stack
                 direction='row'
                 alignItems='center'

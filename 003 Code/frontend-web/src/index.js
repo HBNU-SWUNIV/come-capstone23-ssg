@@ -15,7 +15,7 @@ import { check } from './modules/user/user';
 
 const logger = createLogger();
 const sagaMiddleware = createSagaMiddleware();
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger, ReduxThunk, sagaMiddleware)));
+export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger, ReduxThunk, sagaMiddleware)));
 
 function loadToken() {
   try {

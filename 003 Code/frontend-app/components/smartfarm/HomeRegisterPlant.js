@@ -7,32 +7,93 @@ import {
 import { Button, Text } from 'react-native-paper';
 import TextWithEmoji from '../common/TextWithEmoji';
 import plant from '../../assets/icon/plant.png';
-import sad from '../../assets/emoji/sad.png';
 import laugh from '../../assets/emoji/laugh.png';
+import smile from '../../assets/emoji/smile.png';
+import frown from '../../assets/emoji/frown.png';
+import dizzy from '../../assets/emoji/dizzy.png';
 
-function HomeRegisterPlant() {
+const textWithNdvi = (ndvi, name) => {
+    if (ndvi === null) {
+        return (
+            <></>
+        )
+    }
+
+    if (ndvi > 0.5) {
+        return (
+            <>
+                <TextWithEmoji
+                    style={styles.bodyTextWithEmoji}
+                    emoji={laugh}
+                    text='농부의 DN가 흐르고 있네요'
+                />
+                <Text style={styles.bodyText} variant='bodyMedium'>
+                    {name}는 건강하게 자라고 있으니 걱정마세요
+                </Text>
+            </>
+        )
+    } else if (ndvi > 0) {
+        return (
+            <>
+                <TextWithEmoji
+                    style={styles.bodyTextWithEmoji}
+                    emoji={smile}
+                    text='식집사로 거듭나고 있어요'
+                />
+                <Text style={styles.bodyText} variant='bodyMedium'>
+                    {name}가 열심히 힘을 내고 있어요
+                </Text>
+            </>
+        )
+    } else if (ndvi > -0.5) {
+        return (
+            <>
+                <TextWithEmoji
+                    style={styles.bodyTextWithEmoji}
+                    emoji={frown}
+                    text='아직 포기하기엔 일러요'
+                />
+                <Text style={styles.bodyText} variant='bodyMedium'>
+                    {name}에게 조금 더 관심과 애정을 주세요
+                </Text>
+            </>
+        )
+    } else {
+        return (
+            <>
+                <TextWithEmoji
+                    style={styles.bodyTextWithEmoji}
+                    emoji={frown}
+                    text='응급 상황이에요'
+                />
+                <Text style={styles.bodyText} variant='bodyMedium'>
+                    {name}이 많이 아파하고 있어요
+                </Text>
+            </>
+        )
+    }
+};
+
+function HomeRegisterPlant({
+    name,
+    day,
+    ndvi,
+    onHarvest
+}) {
     return (
         <View style={styles.block}>
             <Image style={styles.image} source={plant}/>
             <Text style={styles.titleText} variant='titleMedium'>
-                새싹이와 10일 째
+                {name}와 {day}일 째
             </Text>
-            <TextWithEmoji
-                style={styles.titleTextWithEmoji}
-                emoji={sad}
-                text='90일 후에 새싹이와 헤어질 예정이에요'
-            />
-            <Button style={styles.button} mode='contained'>
+            <Button
+                style={styles.button}
+                mode='contained'
+                onPress={onHarvest}
+            >
                 수확
             </Button>
-            <TextWithEmoji
-                style={styles.bodyTextWithEmoji}
-                emoji={laugh}
-                text='농부의 DN가 흐르고 있네요'
-            />
-            <Text style={styles.bodyText} variant='bodyMedium'>
-                새싹이는 건강하게 자라고 있으니 걱정마세요
-            </Text>
+            {textWithNdvi(ndvi, name)}
         </View>
     )
 }
@@ -54,10 +115,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 'bold',
         color: '#000000',
-        marginBottom: 8
-    },
-    titleTextWithEmoji: {
-        marginBottom: 40
+        marginBottom: 35
     },
     button: {
         borderRadius: 5,

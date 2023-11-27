@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import AppBar from "../../containers/common/AppBar";
 import ContainerBox from "../../components/common/ContainerBox";
 import SettingPersonalInformation from "../../containers/setting/SettingPersonalInformation";
-import Snackbar from '../../containers/common/Snackbar';
 
 const SettingPersonalInformationPage = () => {
     const token = useSelector(state => state.user.token);
@@ -23,7 +22,6 @@ const SettingPersonalInformationPage = () => {
             <ContainerBox maxWidth="xs">
                 <SettingPersonalInformation />
             </ContainerBox>
-            <Snackbar />
         </div>
     );
 };

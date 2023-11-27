@@ -2,10 +2,11 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import SettingSmartfarmComponent from '../../components/setting/SettingSmartfarm';
-import { changeSmartfarmNumber, modifySmartfarmInitialize, checkSmartfarmNumber, removeSmartfarmInitialize, modifySmartfarm, removeSmartfarm } from '../../modules/smartfarm/smartfarm';
+import { changeSmartfarmNumber, modifySmartfarmInitialize, checkSmartfarmNumber, removeSmartfarmInitialize, getSmartfarm, modifySmartfarm, removeSmartfarm } from '../../modules/smartfarm/smartfarm';
 
 const SettingSmartfarm = () => {
     const token = useSelector(state => state.user.token);
+    const exist = useSelector(state => state.smartfarm.exist);
     const smartfarmNumber = useSelector(state => state.smartfarm.smartfarmNumber);
     const checkSmartfarmNumberSuccess = useSelector(state => state.smartfarm.checkSmartfarmNumberSuccess);
     const removeSmartfarmSuccess = useSelector(state => state.smartfarm.removeSmartfarmSuccess);
@@ -38,6 +39,19 @@ const SettingSmartfarm = () => {
     const goBack = () => {
         navigate(process.env.REACT_APP_SETTING_PATH);
     };
+
+    useEffect(() => {
+        if (exist) {
+            dispatch(getSmartfarm(token));
+        }
+        
+    }, [exist, dispatch, token]);
+
+    useEffect(() => {
+        if (!exist) {
+            navigate(process.env.REACT_APP_REGISTER_SMARTFARM_PATH);
+        }
+    }, [exist, navigate]);
 
     useEffect(() => {
         if (removeSmartfarmSuccess) {

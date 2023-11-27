@@ -7,6 +7,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const Snackbar = ({
     message,
+    success,
     open,
     handleClose
 }) => {
@@ -19,7 +20,7 @@ const Snackbar = ({
         >
             <Alert
                 onClose={handleClose}
-                severity="error"
+                severity={success ? "success" : "error"}
                 sx={{ width: '100%' }}
             >
                 {message}

@@ -7,7 +7,9 @@ function SignUpSuccessScreen() {
     const navigation = useNavigation();
 
     useEffect(() => {
-        setTimeout(() => {navigation.popToTop()}, 2000);
+        setTimeout(() => {
+            navigation.replace('LogIn')
+        }, 2000);
     }, []);
 
     return <ImageWithText image={wave} text='회원가입 성공!'/>;

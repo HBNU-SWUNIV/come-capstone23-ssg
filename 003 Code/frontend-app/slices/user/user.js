@@ -1,10 +1,11 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import { select, takeLatest } from 'redux-saga/effects';
+import { select, put, takeLatest } from 'redux-saga/effects';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import createRequestSaga from '../../assets/api/createRequestSaga';
 import createRequestWithoutSnackbarSaga from '../../assets/api/createRequestWithoutSnackbarSaga';
 import * as WebAPI from '../../assets/api/webApi';
-import { initializeSaga } from '../common';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { initializeSaga, success, showSnackbar } from '../common';
+
 
 const SIGNUP = 'user/signup';
 const LOGIN = 'user/login';
@@ -13,6 +14,7 @@ const LOGOUT = 'user/logout';
 const SEARCH_ID = 'user/searchId';
 const SEARCH_PASSWORD = 'user/searchPassword';
 const VERIFY = 'user/verify';
+const GET_PERSONAL_INFORMATION = 'user/getPersonalInformation';
 const MODIFY_PERSONAL_INFORMATION = 'user/modifyPersonalInformation';
 const MODIFY_PASSWORD = 'user/modifyPassword';
 const WITHDRAW = 'user/withdraw';
@@ -24,6 +26,7 @@ export const logout = createAction(LOGOUT);
 export const searchId = createAction(SEARCH_ID);
 export const searchPassword = createAction(SEARCH_PASSWORD);
 export const verify = createAction(VERIFY);
+export const getPersonalInformation = createAction(GET_PERSONAL_INFORMATION);
 export const modifyPersonalInformation = createAction(MODIFY_PERSONAL_INFORMATION);
 export const modifyPassword = createAction(MODIFY_PASSWORD);
 export const withdraw = createAction(WITHDRAW);
@@ -96,7 +99,8 @@ const userSlice = createSlice({
         check(state, action) {
             state.token = action.payload
         },
-        checkSuccess(state) {
+        checkSuccess(state, action) {
+            state.name = action.payload.name
             state.loginSuccess = true
         },
         checkFailure(state) {
@@ -108,7 +112,7 @@ const userSlice = createSlice({
             state.searchIdSuccess = null
         },
         searchIdSuccess(state, action) {
-            state.id = action.payload.user_id
+            state.id = action.payload.username
             state.searchIdSuccess = true
         },
         searchIdFailure(state) {
@@ -132,7 +136,12 @@ const userSlice = createSlice({
             state.verifySuccess = null
         },
         verifySuccess(state) {
+            state.password = ''
             state.verifySuccess = true
+        },
+        getPersonalInformationSuccess(state, action) {
+            state.name = action.payload.name,
+            state.phoneNumber = action.payload.phone_number
         },
         modifyPasswordInitialize(state) {
             state.password = ''
@@ -167,6 +176,7 @@ const checkSaga = createRequestWithoutSnackbarSaga(CHECK, WebAPI.check);
 const searchIdSaga = createRequestSaga(SEARCH_ID, WebAPI.searchId);
 const searchPasswordSaga = createRequestWithoutSnackbarSaga(SEARCH_PASSWORD, WebAPI.searchPassword);
 const verifySaga = createRequestSaga(VERIFY, WebAPI.verify);
+const getPersonalInformationSaga = createRequestSaga(GET_PERSONAL_INFORMATION, WebAPI.getPersonalInformation);
 const modifyPersonalInformationSaga = createRequestSaga(MODIFY_PERSONAL_INFORMATION, WebAPI.modifyPersonalInformation);
 const modifyPasswordSaga = createRequestSaga(MODIFY_PASSWORD, WebAPI.modifyPassword);
 const withdrawSaga = createRequestWithoutSnackbarSaga(WITHDRAW, WebAPI.withdraw);
@@ -179,6 +189,8 @@ function* loginSuccessSaga() {
     } catch (e) {
         console.log('asyncStorage is not working');
     }
+
+    yield put(check(token));
 }
 
 function removeTokenSaga() {
@@ -187,6 +199,16 @@ function removeTokenSaga() {
     } catch (e) {
         console.log('asyncStorage is not working');
     }
+}
+
+function* modifyPersonalInformationSuccessSaga() {
+    yield put(success());
+    yield put(showSnackbar('개인 정보를 성공적으로 수정했습니다.'));
+}
+
+function* modifyPasswordSuccessSaga() {
+    yield put(success());
+    yield put(showSnackbar('비밀번호를 성공적으로 수정했습니다.'));
 }
 
 export function* userSaga() {
@@ -205,8 +227,11 @@ export function* userSaga() {
     yield takeLatest(SEARCH_ID, searchIdSaga);
     yield takeLatest(SEARCH_PASSWORD, searchPasswordSaga);
     yield takeLatest(VERIFY, verifySaga);
+    yield takeLatest(GET_PERSONAL_INFORMATION, getPersonalInformationSaga);
     yield takeLatest(MODIFY_PERSONAL_INFORMATION, modifyPersonalInformationSaga);
+    yield takeLatest(userSlice.actions.modifyPersonalInformationSuccess, modifyPersonalInformationSuccessSaga);
     yield takeLatest(MODIFY_PASSWORD, modifyPasswordSaga);
+    yield takeLatest(userSlice.actions.modifyPasswordSuccess, modifyPasswordSuccessSaga);
     yield takeLatest(WITHDRAW, withdrawSaga);
     yield takeLatest(userSlice.actions.withdrawSuccess, removeTokenSaga);
 }
@@ -220,6 +245,7 @@ export const {
     changePhoneNumber,
     signupInitialize,
     loginInitialize,
+    checkSuccess,
     searchIdInitialize,
     searchPasswordInitialize,
     verifyInitialize,

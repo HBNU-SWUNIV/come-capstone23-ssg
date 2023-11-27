@@ -63,7 +63,7 @@ function SettingSmartfarm({
                 >
                     <Dialog.Content>
                         <Text variant='bodyMedium'>
-                            스마트팜 삭제 시 해당 스마트팜 정보 및 제어를 할 수 없습니다.
+                            스마트팜 삭제 시 해당 스마트팜 정보 확인 및 제어를 할 수 없습니다.
                             그래도 삭제하신다면, 아래 예 버튼을 클릭해주세요.
                         </Text>
                         <View style={styles.buttons}>

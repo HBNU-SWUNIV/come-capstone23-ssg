@@ -19,7 +19,7 @@ const AlarmPage = () => {
     return (
         <div>
             <AppBar text='알람'/>
-            <ContainerBox maxWidth='xs'>
+            <ContainerBox maxWidth='sm'>
                 <AlarmList />
             </ContainerBox>
         </div>

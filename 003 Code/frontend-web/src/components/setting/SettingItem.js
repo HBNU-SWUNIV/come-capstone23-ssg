@@ -3,7 +3,7 @@ import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRound
 
 const SettingItem = ({ image, title, go }) => {
     return (
-        <div style={{ marginTop: 15, marginBottom: 15 }}>
+        <div style={{ marginTop: 20, marginBottom: 20 }}>
             <Stack
                 direction='row'
                 alignItems='center'

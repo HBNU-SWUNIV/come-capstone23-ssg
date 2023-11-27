@@ -1,13 +1,11 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import RegisterPlant from '../../containers/smartfarm/RegisterPlant';
-import Snackbar from '../../containers/common/Snackbar';
 
 function RegisterPlantScreen() {
     return (
         <View style={styles.block}>
             <RegisterPlant />
-            <Snackbar />
         </View>
     );
 }

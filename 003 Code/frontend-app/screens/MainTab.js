@@ -1,6 +1,6 @@
-import React from 'react';
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, { useEffect } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { useSelector } from "react-redux";
 import FontIcon from 'react-native-vector-icons/FontAwesome6';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -16,6 +16,8 @@ import SettingStack from './SettingStack';
 const Tab = createMaterialBottomTabNavigator();
 
 function MainTab() {
+    const smartfarmExist = useSelector(state => state.smartfarm.exist);
+
     return (
         <Tab.Navigator
             initialRouteName='Home'
@@ -44,7 +46,7 @@ function MainTab() {
             />
             <Tab.Screen
                 name='Smartfarm'
-                component={SmartfarmTab}
+                component={smartfarmExist !== true ? HomeStack : SmartfarmTab}
                 options={{
                     tabBarLabel: '스마트팜',
                     tabBarIcon: ({ color }) => (

@@ -30,7 +30,7 @@ function AlarmItem({
                 ]}
                 onLongPress={onOpen}
             >
-                <Text style={_styles.text} variant='bodyLarge'>{alarm.text}</Text>
+                <Text style={_styles.text} variant='bodyLarge'>{alarm.body}</Text>
                 <Text style={_styles.time} variant='labelLarge'>{alarm.time}</Text>
             </Pressable>
             <Portal>
@@ -67,7 +67,7 @@ const _styles = StyleSheet.create({
     },
     time: {
         textAlign: 'right',
-        marginTop: 8
+        marginTop: 24
     },
     dialog: {
         backgroundColor: '#ffffff',

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import SettingPlantComponent from '../../components/setting/SettingPlant';
@@ -7,6 +7,7 @@ import {
     changeDay,
     modifyPlantInitialize,
     removePlantInitialize,
+    getPlant,
     modifyPlant,
     removePlant
 } from '../../slices/smartfarm/plant';
@@ -51,6 +52,10 @@ function SettingPlant() {
         navigation.pop();
         clear();
     };
+
+    useEffect(() => {
+        dispatch(getPlant(token));
+    }, [dispatch, token]);
 
     useEffect(() => {
         if (removePlantSuccess) {

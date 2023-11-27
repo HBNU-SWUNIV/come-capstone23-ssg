@@ -11,6 +11,7 @@ import {
     changePhoneNumber,
     changePassword,
     modifyPersonalInformationInitialize,
+    getPersonalInformation,
     modifyPersonalInformation,
     withdraw
 } from '../../slices/user/user';
@@ -61,6 +62,10 @@ function SettingPersonalInformation() {
         navigation.pop();
         clear();
     };
+
+    useEffect(() => {
+        dispatch(getPersonalInformation(token));
+    }, [dispatch, token]);
 
     useEffect(() => {
         if (withdrawSuccess) {

@@ -6,6 +6,7 @@ import SnackbarComponent from '../../components/common/Snackbar';
 function Snackbar() {
     const visible = useSelector(state => state.common.showSnackbar);
     const errorMessage = useSelector(state => state.common.errorMessage);
+    const success = useSelector(state => state.common.success);
 
     const dispatch = useDispatch();
 
@@ -16,6 +17,7 @@ function Snackbar() {
             visible={visible}
             onDismiss={onDismiss}
             errorMessage={errorMessage}
+            success={success}
         />
     );
 }

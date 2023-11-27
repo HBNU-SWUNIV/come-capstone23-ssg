@@ -14,13 +14,13 @@ const AlarmItem = ({
             <Stack
                 direction='column'
                 sx={{
-                    mt: 1,
-                    mb: 1,
+                    mt: 2,
+                    mb: 2,
                     cursor: 'pointer'
             }}
                 onClick={onOpenClick}
             >
-                <Typography variant='subtitle1'>{alarm.text}</Typography>
+                <Typography variant='subtitle1'>{alarm.body}</Typography>
                 <Typography variant='overline' sx={{ textAlign: 'right' }}>{alarm.time}</Typography>
             </Stack>
             <Dialog

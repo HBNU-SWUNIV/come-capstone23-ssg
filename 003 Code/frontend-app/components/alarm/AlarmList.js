@@ -15,18 +15,12 @@ import plant from '../../assets/icon/plant.png';
 function AlarmList({
     existSmartfarm,
     existPlant,
+    smartfarmAlarm,
     goRegisterSmartfarm,
     goRegisterPlant
 }) {
     const userAlarm = null;
-    const smartfarmAlarm = [
-        {id: 1, text: '현장 제어 모드로 설정하셨습니다.', time: '15분 전'},
-        {id: 2, text: '원격 제어 모드로 설정하셨습니다.', time: '2시간 전'}
-    ];
-    const plantAlarm = [
-        {id: 1, text: '작물을 키우기 시작하셨습니다.', time: '10일 전'},
-        {id: 2, text: '작물 이름을 \'새싹이\'로 변경하셨습니다.', time: '3일 전'}
-    ];
+    const plantAlarm = null;
 
     return (
         <SafeAreaView style={styles.block}>

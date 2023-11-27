@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
     View,
     Keyboard,
@@ -13,6 +14,7 @@ import {
     Button,
     useTheme
 } from 'react-native-paper';
+import { showSnackbar } from '../../slices/common';
 import OutlineTextInput from './OutlineTextInput';
 import Picker from './Picker';
 
@@ -27,8 +29,8 @@ function TextWithTimePicker({
     const dayNight = ['AM', 'PM']
 
     const hours = [
-        '01', '02', '03', '04', '05', '06', '07', '08', '09',
-        '10', '11', '12'
+        '00', '01', '02', '03', '04', '05', '06', '07', '08', '09',
+        '10', '11'
     ];
 
     const minutes = [
@@ -46,14 +48,13 @@ function TextWithTimePicker({
     const [dayNightSelectedIndex, setDayNightSelectedIndex] = useState(
         time.dayNight === 'AM' ? 0 : 1
     );
-    const [hourSelectedIndex, setHourSelectedIndex] = useState(
-        Number(time.hour) < 13 ? Number(time.hour) - 1 : Number(time.hour) - 13
-    );
+    const [hourSelectedIndex, setHourSelectedIndex] = useState(Number(time.hour));
     const [minuteSelectedIndex, setMinutesSelectedIndex] = useState(Number(time.minute));
 
     const [tmpHour, setTmpHour] = useState(time.hour);
     const [tmpMinute, setTmpMinute] = useState(time.minute);
 
+    const dispatch = useDispatch();
     const theme = useTheme();
     
     const onOpen = () => {
@@ -63,7 +64,7 @@ function TextWithTimePicker({
 
     const onClose = () => {
         setDayNightSelectedIndex(time.dayNight === 'AM' ? 0 : 1);
-        setHourSelectedIndex(Number(time.hour) < 13 ? Number(time.hour) - 1 : Number(time.hour) - 13);
+        setHourSelectedIndex(Number(time.hour));
         setMinutesSelectedIndex(Number(time.minute));
         setTmpHour(time.hour);
         setTmpMinute(time.minute);
@@ -78,18 +79,18 @@ function TextWithTimePicker({
         let minuteIndex;
 
         if (keyboardInput) {
-            if (Number(tmpHour) < 1 || Number(tmpHour) > 24 || Number(tmpMinute) < 0 || Number(tmpMinute) > 59) {
-                console.log('시간을 잘못 입력함');
+            if (Number(tmpHour) < 0 || Number(tmpHour) > 23 || Number(tmpMinute) < 0 || Number(tmpMinute) > 59) {
+                dispatch(showSnackbar('시간을 잘못 입력하셨습니다.'));
                 return;
             }
 
-            if (Number(tmpHour) > 0 && Number(tmpHour) < 12) {
+            if (Number(tmpHour) > -1 && Number(tmpHour) < 12) {
                 dayNightIndex = 0;
-            } else if (Number(tmpHour) < 25) {
+            } else if (Number(tmpHour) < 24) {
                 dayNightIndex = 1;
             }
 
-            hourIndex = (Number(tmpHour) % 12) - 1;
+            hourIndex = (Number(tmpHour) % 12);
 
             if(Number(tmpMinute) > -1 && Number(tmpMinute) < 60) {
                 minuteIndex = Number(tmpMinute);

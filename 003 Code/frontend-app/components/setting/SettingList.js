@@ -8,6 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, Divider } from 'react-native-paper';
 import SettingBox from './SettingBox';
 import SettingItem from '../../containers/setting/SettingItem';
+import GreyButton from '../common/GreyButton';
 import profile from '../../assets/icon/profile.png';
 import lock from '../../assets/icon/lock.png';
 import greenhouse from '../../assets/icon/greenhouse.png';
@@ -18,7 +19,8 @@ function SettingList({
     existSmartfarm,
     existPlant,
     goRegisterSmartfarm,
-    goRegisterPlant
+    goRegisterPlant,
+    onLogOut
 }) {
     const userSetting = [
         {
@@ -102,6 +104,14 @@ function SettingList({
                 <SettingBox title='시스템'>
                     <SettingItem setting={systemSetting}/>
                 </SettingBox>
+                <Divider />
+                <GreyButton
+                    style={styles.logOutButton}
+                    mode='contained'
+                    onPress={onLogOut}
+                >
+                    로그아웃
+                </GreyButton>
             </ScrollView>
         </SafeAreaView>
     );
@@ -115,6 +125,12 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginTop: 30,
         marginBottom: 30
+    },
+    logOutButton: {
+        marginTop: 30,
+        marginBottom: 30,
+        marginRight: 20,
+        marginLeft: 20
     }
 });
 

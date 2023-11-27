@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { all } from 'redux-saga/effects';
-import common from './common';
+import common, { commonSaga } from './common';
 import loading from './loading';
 import user, { userSaga } from './user/user';
 import smartfarm, { smartfarmSaga } from './smartfarm/smartfarm';
@@ -26,6 +26,7 @@ const rootReducer = combineReducers({
 
 export function* rootSaga() {
     yield all([
+        commonSaga(),
         userSaga(),
         smartfarmSaga(),
         plantSaga(),

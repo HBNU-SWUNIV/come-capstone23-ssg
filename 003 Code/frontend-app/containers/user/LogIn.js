@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import messaging from '@react-native-firebase/messaging';
 import LogInComponent from '../../components/user/LogIn';
 import {
     changeId,
@@ -21,10 +22,13 @@ function LogIn() {
 
     const clear = () => {dispatch(loginInitialize())};
 
-    const onLogIn = () => {
+    const onLogIn = async () => {
+        const fcmToken = await messaging().getToken();
+        
         dispatch(login({
             id,
-            password
+            password,
+            fcmToken
         }));
     };
 

@@ -4,16 +4,20 @@ import { select, delay, put, takeLatest } from 'redux-saga/effects';
 const SHOW_SNACKBAR = 'common/SHOW_SNACKBAR';
 const UNSHOW_SNACKBAR = 'common/UNSHOW_SNACKBAR';
 const CLEAR_ERROR_MESSAGE = 'common/CLEAR_ERROR_MESSAGE';
+const SUCCESS = 'common/SUCCESS';
 
 export const showSnackbar = createAction(SHOW_SNACKBAR, errorMessage => errorMessage);
 export const unshowSnackbar = createAction(UNSHOW_SNACKBAR);
 export const clearErrorMessage = createAction(CLEAR_ERROR_MESSAGE);
+export const success = createAction(SUCCESS);
 
 const initialState = {
     showPassword: false,
     showSnackbar: false,
     
-    errorMessage: null
+    errorMessage: null,
+
+    success: false
 };
 
 export function* initializeSaga() {
@@ -46,7 +50,12 @@ const common = handleActions(
         }),
         [CLEAR_ERROR_MESSAGE]: (state) => ({
             ...state,
-            errorMessage: null
+            errorMessage: null,
+            success: false
+        }),
+        [SUCCESS]: (state) => ({
+            ...state,
+            success: true
         })
     },
     initialState

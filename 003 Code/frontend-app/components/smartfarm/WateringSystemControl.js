@@ -40,6 +40,7 @@ function WateringSystemControl({
                     />
                     <TextWithNumberPicker
                         name='물 주는 시간'
+                        value={wateringSystemControl.workTime}
                         numbers={workTimeNumbers}
                         disabled={!remoteControl || wateringSystemControl.work}
                         onChange={onWorkTimeChange}
@@ -52,8 +53,9 @@ function WateringSystemControl({
                     />
                     <TextWithPeriodPicker
                         name='물 주기'
-                        workTime={wateringSystemControl.workTime}
+                        period={wateringSystemControl.autoWorkPeriod}
                         periodNumbers={periodNumbers}
+                        workTime={wateringSystemControl.workTime}
                         disabled={!wateringSystemControl.autoWork}
                         onChange={onAutoWorkPeriodChange}
                     />

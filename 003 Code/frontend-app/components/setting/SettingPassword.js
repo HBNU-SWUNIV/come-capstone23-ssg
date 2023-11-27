@@ -26,6 +26,7 @@ function SettingPassword({
                 onChangeText={onPasswordChange}
             />
             <PasswordTextInput
+                error={password != passwordCheck}
                 label='비밀번호 확인'
                 value={passwordCheck}
                 onChangeText={onPasswordCheckChange}
@@ -43,7 +44,7 @@ function SettingPassword({
             <Button
                 style={styles.button}
                 mode='contained'
-                disalbed={password === '' || password !== passwordCheck}
+                disabled={password === '' || password !== passwordCheck}
                 onPress={onModify}
             >
                 다음

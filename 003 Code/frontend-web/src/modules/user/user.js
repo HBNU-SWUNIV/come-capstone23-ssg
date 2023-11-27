@@ -1,9 +1,9 @@
 import { createAction, handleActions } from 'redux-actions';
-import { takeLatest } from 'redux-saga/effects';
+import { select, put, takeLatest } from 'redux-saga/effects';
 import createRequestSaga, { createRequestActionTypes } from '../../lib/api/createRequestSaga';
 import createRequestWithoutSnackbarSaga, { createRequesWithoutSnackbarActionTypes } from '../../lib/api/createRequestWithoutSnackbarSaga';
 import * as WebAPI from '../../lib/api/webApi';
-import { initializeSaga } from '../common';
+import { initializeSaga, success, showSnackbar } from '../common';
 
 const CHANGE_ID = 'user/CHANGE_ID';
 const CHANGE_PASSWORD = 'user/CHANGE_PASSWORD';
@@ -16,6 +16,7 @@ const SEARCH_ID_INITIALIZE = 'user/SEARCH_ID_INITIALIZE';
 const SEARCH_PASSWORD_INITIALIZE = 'user/SEARCH_PASSWORD_INITIALIZE';
 const VERIFY_INITIALIZE = 'user/VERIFY_INITIALIZE';
 const MODIFY_PASSWORD_INITIALIZE = 'user/MODIFY_PASSWORD_INITIALIZE';
+const [GET_PERSONAL_INFORMATION, GET_PERSONAL_INFORMATION_SUCCESS] = createRequestActionTypes('user/GET_PERSONAL_INFORMATION');
 const MODIFY_PERSONAL_INFORMATION_INITIALIZE = 'user/MODIFY_PERSONAL_INFORMATION_INITIALIZE';
 const [SIGNUP, SIGNUP_SUCCESS] = createRequestActionTypes('user/SIGNUP');
 const [LOGIN, LOGIN_SUCCESS] = createRequestActionTypes('user/LOGIN');
@@ -39,9 +40,11 @@ export const searchIdInitialize = createAction(SEARCH_ID_INITIALIZE);
 export const searchPasswordInitialize = createAction(SEARCH_PASSWORD_INITIALIZE);
 export const verifyInitialize = createAction(VERIFY_INITIALIZE);
 export const modifyPasswordInitialize = createAction(MODIFY_PASSWORD_INITIALIZE);
+export const getPersonalInformation = createAction(GET_PERSONAL_INFORMATION);
 export const modifyPersonalInformationInitialize = createAction(MODIFY_PERSONAL_INFORMATION_INITIALIZE);
 export const signup = createAction(SIGNUP);
 export const login = createAction(LOGIN);
+export const loginSuccess = createAction(LOGIN_SUCCESS);
 export const check = createAction(CHECK);
 export const logout = createAction(LOGOUT);
 export const searchId = createAction(SEARCH_ID);
@@ -57,6 +60,7 @@ const checkSaga = createRequestWithoutSnackbarSaga(CHECK, WebAPI.check);
 const searchIdSaga = createRequestWithoutSnackbarSaga(SEARCH_ID, WebAPI.searchId);
 const searchPasswordSaga = createRequestWithoutSnackbarSaga(SEARCH_PASSWORD, WebAPI.searchPassword);
 const verifySaga = createRequestSaga(VERIFY, WebAPI.verify);
+const getPersonalInformationSaga = createRequestSaga(GET_PERSONAL_INFORMATION, WebAPI.getPersonalInformation);
 const modifyPersonalInformationSaga = createRequestSaga(MODIFY_PERSONAL_INFORMATION, WebAPI.modifyPersonalInformation);
 const modifyPasswordSaga = createRequestSaga(MODIFY_PASSWORD, WebAPI.modifyPassword);
 const withdrawSaga = createRequestSaga(WITHDRAW, WebAPI.withdraw);
@@ -69,21 +73,43 @@ function removeTokenSaga() {
     }
 }
 
+function* loginSuccessSaga() {
+    const token = yield select(state => state.user.token);
+
+    yield put(check(token));
+}
+
+function* modifyPersonalInformationSuccessSaga() {
+    yield put(success());
+    yield put(showSnackbar('개인 정보를 성공적으로 수정했습니다.'));
+    
+    const token = yield select(state => state.user.token);
+
+    yield put(check(token));
+}
+
+function* modifyPasswordSuccessSaga() {
+    yield put(success());
+    yield put(showSnackbar('비밀번호를 성공적으로 수정했습니다.'));
+}
+
 export function* userSaga() {
     yield takeLatest(SIGNUP_INITIALIZE, initializeSaga);
     yield takeLatest(LOGIN_INITIALIZE, initializeSaga);
     yield takeLatest(CHECK, checkSaga);
     yield takeLatest(VERIFY_INITIALIZE, initializeSaga);
-    // yield takeLatest(MODIFY_PERSONAL_INFORMATION_INITIALIZE, );   // 사용자 정보 가져와서 초기화하기
-    yield takeLatest(MODIFY_PASSWORD_INITIALIZE, initializeSaga);
+    yield takeLatest(GET_PERSONAL_INFORMATION, getPersonalInformationSaga);
     yield takeLatest(MODIFY_PERSONAL_INFORMATION_INITIALIZE, initializeSaga);
     yield takeLatest(SIGNUP, signupSaga);
     yield takeLatest(LOGIN, loginSaga);
+    yield takeLatest(LOGIN_SUCCESS, loginSuccessSaga);
     yield takeLatest(SEARCH_ID, searchIdSaga);
     yield takeLatest(SEARCH_PASSWORD, searchPasswordSaga);
     yield takeLatest(VERIFY, verifySaga);
     yield takeLatest(MODIFY_PERSONAL_INFORMATION, modifyPersonalInformationSaga);
+    yield takeLatest(MODIFY_PERSONAL_INFORMATION_SUCCESS, modifyPersonalInformationSuccessSaga);
     yield takeLatest(MODIFY_PASSWORD, modifyPasswordSaga);
+    yield takeLatest(MODIFY_PASSWORD_SUCCESS, modifyPasswordSuccessSaga);
     yield takeLatest(WITHDRAW, withdrawSaga);
     yield takeLatest(WITHDRAW_SUCCESS, removeTokenSaga);
     yield takeLatest(LOGOUT, removeTokenSaga);
@@ -180,8 +206,9 @@ const user = handleActions(
             ...state,
             token: token
         }),
-        [CHECK_SUCCESS]: (state) => ({
+        [CHECK_SUCCESS]: (state, { payload: {name} }) => ({
             ...state,
+            name: name,
             loginSuccess: true
         }),
         [CHECK_FAILURE]: (state) => ({
@@ -190,7 +217,7 @@ const user = handleActions(
         }),
         [SEARCH_ID_SUCCESS]: (state, { payload }) => ({
             ...state,
-            id: payload.user_id,
+            id: payload.username,
             searchIdSuccess: true
         }),
         [SEARCH_ID_FAILURE]: (state) => ({
@@ -213,7 +240,16 @@ const user = handleActions(
         }),
         [VERIFY_SUCCESS]: (state) => ({
             ...state,
+            password: '',
             verifySuccess: true
+        }),
+        [GET_PERSONAL_INFORMATION_SUCCESS]: (state, { payload: {
+            name,
+            phone_number
+        }}) => ({
+            ...state,
+            name: name,
+            phoneNumber: phone_number
         }),
         [MODIFY_PASSWORD_INITIALIZE]: (state) => ({
             ...state,
@@ -223,6 +259,8 @@ const user = handleActions(
         }),
         [MODIFY_PASSWORD_SUCCESS]: (state) => ({
             ...state,
+            password: '',
+            passwordCheck: '',
             modifyPasswordSuccess: true
         }),
         [MODIFY_PERSONAL_INFORMATION_INITIALIZE]: (state) => ({

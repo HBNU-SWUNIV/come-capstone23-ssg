@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { getMessaging, getToken } from 'firebase/messaging';
+import { app as firebaseApp } from "../../lib/firebase/firebase";
 import LogInComponent from '../../components/user/LogIn';
 import { changeId, changePassword, loginInitialize, login } from '../../modules/user/user';
 import { showSnackbar } from '../../modules/common';
@@ -17,11 +19,24 @@ const LogIn = () => {
     const onIdChange = useCallback(e => dispatch(changeId(e.target.value)), [dispatch]);
     const onPasswordChange = useCallback(e => dispatch(changePassword(e.target.value)), [dispatch]);
 
-    const onLogInClick = () => {
-        dispatch(login({
-            id,
-            password
-        }));
+    const onLogInClick = async () => {
+        if (Notification.permission === 'granted') {
+            const messaging = getMessaging(firebaseApp);
+            const fcmToken = await getToken(messaging, {
+                vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY
+            });
+
+            dispatch(login({
+                id,
+                password,
+                fcmToken
+            }));
+        } else {
+            dispatch(login({
+                id,
+                password
+            }));
+        }
     };
     const goVerify = () => {
         navigate(process.env.REACT_APP_VERIFY_PATH);
