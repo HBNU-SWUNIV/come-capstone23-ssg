@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import RegisterPlantComponent from '../../components/smartfarm/RegisterPlant';
-import { changeName, changeDay, registerPlantInitialize, registerPlant } from '../../modules/smartfarm/plant';
+import { changeName, changeDay, registerPlantInitialize, registerPlantSuccessInitialize, registerPlant } from '../../modules/smartfarm/plant';
 
 const RegisterPlant = () => {
     const token = useSelector(state => state.user.token);
@@ -36,7 +36,13 @@ const RegisterPlant = () => {
             navigate(process.env.REACT_APP_REGISTER_PLANT_SUCCESS_PATH);
         }
 
-        return () => dispatch(registerPlantInitialize());
+        return () => {
+            if (registerPlantSuccess === false) {
+                dispatch(registerPlantInitialize());
+            } else if (registerPlantSuccess) {
+                dispatch(registerPlantSuccessInitialize());
+            }
+        }
     }, [registerPlantSuccess, navigate, dispatch]);
 
     return (

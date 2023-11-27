@@ -3,6 +3,7 @@ import { takeLatest } from 'redux-saga/effects';
 import dayjs from 'dayjs';
 import createControlRequestSaga, { createControlRequesActionTypes } from '../../lib/api/createControlRequestSaga';
 import * as WebAPI from '../../lib/api/webApi';
+import { CHECK_SUCCESS } from '../user/user';
 
 const [CHANGE_WORK, CHANGE_WORK_SUCCESS] = createControlRequesActionTypes('fanControl/CHANGE_WORK');
 const [CHANGE_AUTOWORK, CHANGE_AUTOWORK_SUCCESS] = createControlRequesActionTypes('fanControl/CHANGE_AUTOWORK');
@@ -16,10 +17,10 @@ export const changeAutoWorkStartTime = createAction(CHANGE_AUTOWORK_START_TIME, 
 export const changeAutoWorkEndTime = createAction(CHANGE_AUTOWORK_END_TIME, endTime => endTime);
 export const changeRemoteControl = createAction(CHANGE_REMOTE_CONTROL, remoteControl => remoteControl);
 
-const changeWorkSaga = createControlRequestSaga(CHANGE_WORK, WebAPI.controlLed, 'work');
-const changeAutoWorkSaga = createControlRequestSaga(CHANGE_AUTOWORK, WebAPI.controlLed, 'autoWork');
-const changeLedAutoWorkStartTimeSaga = createControlRequestSaga(CHANGE_AUTOWORK_START_TIME, WebAPI.controlLed, 'autoWorkStartTime');
-const changeLedAutoWorkEndTimeSaga = createControlRequestSaga(CHANGE_AUTOWORK_END_TIME, WebAPI.controlLed, 'autoWorkEndTime');
+const changeWorkSaga = createControlRequestSaga(CHANGE_WORK, WebAPI.controlFan, 'work');
+const changeAutoWorkSaga = createControlRequestSaga(CHANGE_AUTOWORK, WebAPI.controlFan, 'autoWork');
+const changeLedAutoWorkStartTimeSaga = createControlRequestSaga(CHANGE_AUTOWORK_START_TIME, WebAPI.controlFan, 'autoWorkStartTime');
+const changeLedAutoWorkEndTimeSaga = createControlRequestSaga(CHANGE_AUTOWORK_END_TIME, WebAPI.controlFan, 'autoWorkEndTime');
 
 export function* fanControlSaga() {
     yield takeLatest(CHANGE_WORK, changeWorkSaga);
@@ -52,7 +53,7 @@ const fanControl = handleActions(
             ...state,
             work: false,
             autoWork: autoWork,
-            status: state.autoWork === true ? '환기팬이 작동하고 있지 않아요' : `${state.autoWorkPeriod}${state.autoWorkPeriodUnit} 이후에 ${state.autoWorkTime}${state.autoWorkTimeUnit} 동안 작동해요`,
+            status: state.autoWork === true ? '환기팬이 작동하고 있지 않아요' : `환기팬이 자동으로 ${state.autoWorkStartTime.format('A hh:mm')}에 작동하고, ${state.autoWorkEndTime.format('A hh:mm')}에 중단해요`,
             workButtonText: '작동하기'
         }),
         [CHANGE_AUTOWORK_START_TIME_SUCCESS]: (state, { payload: startTime }) => ({
@@ -71,7 +72,31 @@ const fanControl = handleActions(
             autoWork: false,
             status: remoteControl ? '환기팬이 작동하고 있지 않아요' : '원격 제어 모드가 아니에요',
             workButtonText: '작동하기'
-        })    
+        }),
+        [CHECK_SUCCESS]: (state, { payload: {
+            remotepower,
+            fantoggle,
+            fanautotoggle,
+            fanstarttimevalue,
+            fanstartminutevalue,
+            fanendtimevalue,
+            fanendminutevalue
+        }}) => ({
+            ...state,
+            work: remotepower ? fantoggle : false,
+            autoWork: remotepower ? fanautotoggle : false,
+            autoWorkStartTime: remotepower ? dayjs(`${fanstarttimevalue}:${fanstartminutevalue}`, 'h:m') : dayjs(),
+            autoWorkEndTime: remotepower ? dayjs(`${fanendtimevalue}:${fanendminutevalue}`, 'h:m') : dayjs(),
+            status: remotepower
+            ? (fantoggle
+                ? '환기팬이 작동하고 있어요'
+                : (fanautotoggle
+                    ? `환기팬이 자동으로 ${dayjs(`${fanstarttimevalue}:${fanstartminutevalue}`, 'h:m').format('A hh:mm')}에 작동하고, ${dayjs(`${fanendtimevalue}:${fanendminutevalue}`, 'h:m').format('A hh:mm')}에 중단해요`
+                    : 'LED가 작동하고 있지 않아요'
+                )
+            ) : '원격 제어 모드가 아니에요',
+            workButtonText: fantoggle ? '중단하기' : '작동하기'
+        }) 
     },
     initialState
 );

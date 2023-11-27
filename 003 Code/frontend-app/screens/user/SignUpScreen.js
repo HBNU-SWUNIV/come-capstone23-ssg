@@ -1,13 +1,11 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import SignUp from '../../containers/user/SignUp';
-import Snackbar from '../../containers/common/Snackbar';
 
 function SignUpScreen() {
     return (
         <View style={styles.block}>
             <SignUp />
-            <Snackbar />
         </View>
     );
 }

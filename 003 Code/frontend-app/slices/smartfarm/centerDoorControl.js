@@ -2,6 +2,7 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import { takeLatest } from "redux-saga/effects";
 import createControlRequestSaga from "../../assets/api/createControlRequestSaga";
 import * as WebAPI from '../../assets/api/webApi';
+import { checkSuccess } from "../user/user";
 
 const CHANGE_WORK = 'centerDoorControl/changeWork';
 const CHANGE_AUTOWORK = 'centerDoorControl/changeAutoWork';
@@ -21,17 +22,45 @@ export const changeAutoWorkEndDayNight = createAction(CHANGE_AUTOWORK_END_DAYNIG
 export const changeAutoWorkEndHour = createAction(CHANGE_AUTOWORK_END_HOUR, endHour => endHour);
 export const changeAutoWorkEndMinute = createAction(CHANGE_AUTOWORK_END_MINUTE, endMinute => endMinute);
 
+function dayNightIntToString(hour) {
+    if (hour < 12) {
+        return 'AM';
+    } else {
+        return 'PM';
+    }
+}
+
+function hourIntToString(hour) {
+    if (hour < 10) {
+        return `0${String(hour)}`;
+    } else if (hour < 12) {
+        return String(hour);
+    } else if (hour < 22) {
+        return `0${String(hour % 12)}`
+    } else {
+        return String(hour % 12);
+    }
+}
+
+function minuteIntToString(minute) {
+    if (minute < 10) {
+        return `0${String(minute)}`;
+    } else {
+        return String(minute);
+    }
+}
+
 const initialState = {
     work: false,
     autoWork: false,
     autoWorkStart: {
         dayNight: 'AM',
-        hour: '01',
+        hour: '00',
         minute: '00'
     },
     autoWorkEnd: {
         dayNight: 'AM',
-        hour: '01',
+        hour: '00',
         minute: '00'
     },
     status: '원격 제어 모드가 아니에요',
@@ -45,8 +74,8 @@ const centerDoorControlSlice = createSlice({
     reducers: {
         changeWorkSuccess(state) {
             state.work = !state.work
-            state.status = state.work ? '중앙문이 열려 있지 않아요' : '중앙문이 열려 있어요',
-            state.workButtonText = state.work ? '열기' : '닫기'
+            state.status = state.work ? '중앙문이 열려 있어요' : '중앙문이 열려 있지 않아요',
+            state.workButtonText = state.work ? '닫기' : '열기'
         },
         changeAutoWorkSuccess(state) {
             state.work = false
@@ -83,28 +112,50 @@ const centerDoorControlSlice = createSlice({
             state.autoWork = false
             state.autoWorkStart = {
                 dayNight: 'AM',
-                hour: '01',
+                hour: '00',
                 minute: '00'
             }
             state.autoWorkEnd = {
                 dayNight: 'AM',
-                hour: '01',
+                hour: '00',
                 minute: '00'
             }
             state.status = action.payload ? '중앙문이 열려 있지 않아요' : '원격 제어 모드가 아니에요'
             state.workButtonText = '열기'
         }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(checkSuccess, (state, action) => {
+                state.work = action.payload.remotepower ? action.payload.doortoggle : false
+                state.autoWork = action.payload.remotepower ? action.payload.doorautotogle : false
+                state.autoWorkStart.dayNight = action.payload.remotepower ? dayNightIntToString(action.payload.doorstarttimevalue) : 'AM'
+                state.autoWorkStart.hour = action.payload.remotepower ? hourIntToString(action.payload.doorstarttimevalue) : '00'
+                state.autoWorkStart.minute = action.payload.remotepower ? minuteIntToString(action.payload.doorstartminutevalue) : '00'
+                state.autoWorkEnd.dayNight = action.payload.remotepower ? dayNightIntToString(action.payload.doorendtimevalue) : 'AM'
+                state.autoWorkEnd.hour = action.payload.remotepower ? hourIntToString(action.payload.doorendtimevalue) : '00'
+                state.autoWorkEnd.minute = action.payload.remotepower ? minuteIntToString(action.payload.doorendminutevalue) : '00'
+                state.status = action.payload.remotepower
+                ? (action.payload.doortoggle
+                    ? '중앙문이 열려 있어요'
+                    : (action.payload.doorautotogle
+                        ? `중앙이 자동으로 ${dayNightIntToString(action.payload.doorstarttimevalue)} ${hourIntToString(action.payload.doorstarttimevalue)}:${minuteIntToString(action.payload.doorstartminutevalue)}에 열고, ${dayNightIntToString(action.payload.doorendtimevalue)} ${hourIntToString(action.payload.doorendtimevalue)}:${minuteIntToString(action.payload.doorendminutevalue)}에 닫아요`
+                        : '중앙문이 열려 있지 않아요'
+                    )
+                ) : '원격 제어 모드가 아니에요'
+                state.workButtonText = action.payload.doortoggle ? '닫기' : '열기'
+            })
     }
 });
 
-const changeWorkSaga = createControlRequestSaga(CHANGE_WORK, WebAPI.controlLed, 'work');
-const changeAutoWorkSaga = createControlRequestSaga(CHANGE_AUTOWORK, WebAPI.controlLed, 'autoWork');
-const changeAutoWorkStartDayNightSaga = createControlRequestSaga(CHANGE_AUTOWORK_START_DAYNIGHT, WebAPI.controlLed, ['autoWorkStart', 'dayNight']);
-const changeAutoWorkStartHourSaga = createControlRequestSaga(CHANGE_AUTOWORK_START_HOUR, WebAPI.controlLed, ['autoWorkStart', 'hour']);
-const changeAutoWorkStartMinuteSaga = createControlRequestSaga(CHANGE_AUTOWORK_START_MINUTE, WebAPI.controlLed, ['autoWorkStart', 'minute']);
-const changeAutoWorkEndDayNightSaga = createControlRequestSaga(CHANGE_AUTOWORK_END_DAYNIGHT, WebAPI.controlLed, ['autoWorkEnd', 'dayNight']);
-const changeAutoWorkEndHourSaga = createControlRequestSaga(CHANGE_AUTOWORK_END_HOUR, WebAPI.controlLed, ['autoWorkEnd', 'hour']);
-const changeAutoWorkEndMinuteSaga = createControlRequestSaga(CHANGE_AUTOWORK_END_MINUTE, WebAPI.controlLed, ['autoWorkEnd', 'minute']);
+const changeWorkSaga = createControlRequestSaga(CHANGE_WORK, WebAPI.controlCenterDoor, 'work');
+const changeAutoWorkSaga = createControlRequestSaga(CHANGE_AUTOWORK, WebAPI.controlCenterDoor, 'autoWork');
+const changeAutoWorkStartDayNightSaga = createControlRequestSaga(CHANGE_AUTOWORK_START_DAYNIGHT, WebAPI.controlCenterDoor, ['autoWorkStart', 'dayNight']);
+const changeAutoWorkStartHourSaga = createControlRequestSaga(CHANGE_AUTOWORK_START_HOUR, WebAPI.controlCenterDoor, ['autoWorkStart', 'hour']);
+const changeAutoWorkStartMinuteSaga = createControlRequestSaga(CHANGE_AUTOWORK_START_MINUTE, WebAPI.controlCenterDoor, ['autoWorkStart', 'minute']);
+const changeAutoWorkEndDayNightSaga = createControlRequestSaga(CHANGE_AUTOWORK_END_DAYNIGHT, WebAPI.controlCenterDoor, ['autoWorkEnd', 'dayNight']);
+const changeAutoWorkEndHourSaga = createControlRequestSaga(CHANGE_AUTOWORK_END_HOUR, WebAPI.controlCenterDoor, ['autoWorkEnd', 'hour']);
+const changeAutoWorkEndMinuteSaga = createControlRequestSaga(CHANGE_AUTOWORK_END_MINUTE, WebAPI.controlCenterDoor, ['autoWorkEnd', 'minute']);
 
 export function* centerDoorControlSaga() {
     yield takeLatest(CHANGE_WORK, changeWorkSaga);

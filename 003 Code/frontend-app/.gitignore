@@ -67,3 +67,6 @@ yarn-error.log
 
 # api url
 webApiUrl.js
+
+# firebase
+google-services.json

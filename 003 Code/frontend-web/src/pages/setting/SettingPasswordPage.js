@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import AppBar from "../../containers/common/AppBar";
 import ContainerBox from '../../components/common/ContainerBox';
 import SettingPassword from "../../containers/setting/SettingPassword";
-import Snackbar from '../../containers/common/Snackbar';
 
 const SettingPasswordPage = () => {
     const token = useSelector(state => state.user.token);
@@ -23,7 +22,6 @@ const SettingPasswordPage = () => {
             <ContainerBox maxWidth='xs'>
                 <SettingPassword />
             </ContainerBox>
-            <Snackbar />
         </div>
     );
 };

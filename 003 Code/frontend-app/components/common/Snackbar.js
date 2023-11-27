@@ -4,13 +4,17 @@ import { Snackbar as ReactNativePaperSnackbar, useTheme } from 'react-native-pap
 function Snackbar({
     visible,
     onDismiss,
-    errorMessage
+    errorMessage,
+    success
 }) {
     const theme = useTheme();
 
     return (
         <ReactNativePaperSnackbar
-            style={{ backgroundColor: theme.colors.error }}
+            style={{
+                backgroundColor: success ? theme.colors.info : theme.colors.error
+            }}
+            wrapperStyle={{ top: 0 }}
             duration={5000}
             visible={visible}
             onDismiss={onDismiss}

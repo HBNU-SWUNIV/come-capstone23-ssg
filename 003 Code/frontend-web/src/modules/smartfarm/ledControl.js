@@ -3,6 +3,7 @@ import { takeLatest } from 'redux-saga/effects';
 import dayjs from 'dayjs';
 import createControlRequestSaga, { createControlRequesActionTypes } from '../../lib/api/createControlRequestSaga';
 import * as WebAPI from '../../lib/api/webApi';
+import { CHECK_SUCCESS } from '../user/user';
 
 const [CHANGE_WORK, CHANGE_WORK_SUCCESS] = createControlRequesActionTypes('ledControl/CHANGE_WORK');
 const [CHANGE_AUTOWORK, CHANGE_AUTOWORK_SUCCESS] = createControlRequesActionTypes('ledControl/CHANGE_AUTOWORK');
@@ -50,7 +51,7 @@ const ledControl = handleActions(
             ...state,
             work: false,
             autoWork: autoWork,
-            status: !state.autoWork ? `LED가 자동으로 ${state.autoWorkStartTime.format('A hh:mm')}에 켜지고, ${state.autoWorkEndTime.format('A hh:mm')}에 꺼져요` : 'LED가 켜져 있지 않아요',
+            status: !state.autoWork ? `LED가 자동으로 ${state.autoWorkStartTime.format('A hh:mm')}에 켜지고, ${state.autoWorkEndTime.format('A hh:mm')}에 꺼져요` : 'LED가 꺼져 있지 않아요',
             workButtonText: '켜기'
         }),
         [CHANGE_AUTOWORK_START_TIME_SUCCESS]: (state, { payload: startTime }) => ({
@@ -69,6 +70,30 @@ const ledControl = handleActions(
             autoWork: false,
             status: remoteControl ? 'LED가 꺼져 있어요' : '원격 제어 모드가 아니에요',
             workButtonText: '켜기'
+        }),
+        [CHECK_SUCCESS]: (state, { payload: {
+            remotepower,
+            ledtoggle,
+            ledautotoggle,
+            ledstarttimevalue,
+            ledstartminutevalue,
+            ledendtimevalue,
+            ledendminutevalue
+        }}) => ({
+            ...state,
+            work: remotepower ? ledtoggle : false,
+            autoWork: remotepower ? ledautotoggle : false,
+            autoWorkStartTime: remotepower ? dayjs(`${ledstarttimevalue}:${ledstartminutevalue}`, 'h:m') : dayjs(),
+            autoWorkEndTime: remotepower ? dayjs(`${ledendtimevalue}:${ledendminutevalue}`, 'h:m') : dayjs(),
+            status: remotepower
+            ? (ledtoggle
+                ? 'LED가 켜져 있어요'
+                : (ledautotoggle
+                    ? `LED가 자동으로 ${dayjs(`${ledstarttimevalue}:${ledstartminutevalue}`, 'h:m').format('A hh:mm')}에 켜지고, ${dayjs(`${ledendtimevalue}:${ledendminutevalue}`, 'h:m').format('A hh:mm')}에 꺼져요`
+                    : 'LED가 꺼져 있어요'
+                )
+            ) : '원격 제어 모드가 아니에요',
+            workButtonText: ledtoggle ? '끄기' : '켜기'
         })
     },
     initialState

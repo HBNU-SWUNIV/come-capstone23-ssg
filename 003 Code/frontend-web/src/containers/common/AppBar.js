@@ -1,10 +1,12 @@
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import AppBarComponent from '../../components/common/AppBar';
 import { logout } from '../../modules/user/user';
 
 const AppBar = ({ text, children }) => {
+    const name = useSelector(state => state.user.name);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -28,6 +30,7 @@ const AppBar = ({ text, children }) => {
 
     return (
         <AppBarComponent
+            name={name}
             text={text}
             children={children}
             onLogOutClick={onLogOutClick}

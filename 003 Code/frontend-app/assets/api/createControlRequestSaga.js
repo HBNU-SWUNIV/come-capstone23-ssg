@@ -9,22 +9,29 @@ export default function createControlRequestSaga(type, request, key) {
     return function*(action) {
         yield put(startLoading(type));
 
+        const token = yield select(state => state.user.token);
         const datas = yield select(state => state[type.split('/', 1)[0]]);
 
         try {
             if (typeof(key) === 'string') {
                 yield call(request, {
-                    ...datas,
-                    [key]: action.payload !== undefined ? action.payload : !datas[key]
+                    token,
+                    datas: {
+                        ...datas,
+                        [key]: action.payload !== undefined ? action.payload : !datas[key]
+                    }
                 });
             } else {
                 yield call(request, {
-                    ...datas,
-                    [key[0]]: {
-                        ...[key[0]],
-                        [key[1]]: action.payload
+                    token,
+                    datas: {
+                        ...datas,
+                        [key[0]]: {
+                            ...datas[key[0]],
+                            [key[1]]: action.payload
+                        }
                     }
-                })
+                });
             }
             yield put({
                 type: success,

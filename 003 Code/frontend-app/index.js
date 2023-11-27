@@ -1,4 +1,5 @@
 import { AppRegistry } from 'react-native';
+import messaging from '@react-native-firebase/messaging';
 import App from './App';
 import { name as appName } from './app.json';
 import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
@@ -23,5 +24,10 @@ export default function Main() {
         </PaperProvider>
     );
 }
+
+// FCM Backgournd & Quit
+messaging().setBackgroundMessageHandler(async remoteMessage => {
+    console.log('Message handled in the background!', remoteMessage);
+});
 
 AppRegistry.registerComponent(appName, () => Main);

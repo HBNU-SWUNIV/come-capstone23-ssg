@@ -3,6 +3,7 @@ import { takeLatest } from 'redux-saga/effects';
 import dayjs from 'dayjs';
 import createControlRequestSaga, { createControlRequesActionTypes } from '../../lib/api/createControlRequestSaga';
 import * as WebAPI from '../../lib/api/webApi';
+import { CHECK_SUCCESS } from '../user/user';
 
 const [CHANGE_WORK, CHANGE_WORK_SUCCESS] = createControlRequesActionTypes('centerDoorControl/CHANGE_WORK');
 const [CHANGE_AUTOWORK, CHANGE_AUTOWORK_SUCCESS] = createControlRequesActionTypes('centerDoorControl/CHANGE_AUTOWORK');
@@ -16,10 +17,10 @@ export const changeAutoWorkStartTime = createAction(CHANGE_AUTOWORK_START_TIME, 
 export const changeAutoWorkEndTime = createAction(CHANGE_AUTOWORK_END_TIME, endTime => endTime);
 export const changeRemoteControl = createAction(CHANGE_REMOTE_CONTROL, remoteControl => remoteControl);
 
-const changeWorkSaga = createControlRequestSaga(CHANGE_WORK, WebAPI.controlLed, 'work');
-const changeAutoWorkSaga = createControlRequestSaga(CHANGE_AUTOWORK, WebAPI.controlLed, 'autoWork');
-const changeLedAutoWorkStartTimeSaga = createControlRequestSaga(CHANGE_AUTOWORK_START_TIME, WebAPI.controlLed, 'autoWorkStartTime');
-const changeLedAutoWorkEndTimeSaga = createControlRequestSaga(CHANGE_AUTOWORK_END_TIME, WebAPI.controlLed, 'autoWorkEndTime');
+const changeWorkSaga = createControlRequestSaga(CHANGE_WORK, WebAPI.controlCenterDoor, 'work');
+const changeAutoWorkSaga = createControlRequestSaga(CHANGE_AUTOWORK, WebAPI.controlCenterDoor, 'autoWork');
+const changeLedAutoWorkStartTimeSaga = createControlRequestSaga(CHANGE_AUTOWORK_START_TIME, WebAPI.controlCenterDoor, 'autoWorkStartTime');
+const changeLedAutoWorkEndTimeSaga = createControlRequestSaga(CHANGE_AUTOWORK_END_TIME, WebAPI.controlCenterDoor, 'autoWorkEndTime');
 
 export function* centerDoorControlSaga() {
     yield takeLatest(CHANGE_WORK, changeWorkSaga);
@@ -71,6 +72,30 @@ const centerDoorControl = handleActions(
             autoWork: false,
             status: remoteControl ? '중앙문이 열려 있지 않아요' : '원격 제어 모드가 아니에요',
             workButtonText: '열기'
+        }),
+        [CHECK_SUCCESS]: (state, { payload: {
+            remotepower,
+            doortoggle,
+            doorautotoggle,
+            doorstarttimevalue,
+            doorstartminutevalue,
+            doorendtimevalue,
+            doorendminutevalue
+        }}) => ({
+            ...state,
+            work: remotepower ? doortoggle : false,
+            autoWork: remotepower ? doorautotoggle : false,
+            autoWorkStartTime: remotepower ? dayjs(`${doorstarttimevalue}:${doorstartminutevalue}`, 'h:m') : dayjs(),
+            autoWorkEndTime: remotepower ? dayjs(`${doorendtimevalue}:${doorendminutevalue}`, 'h:m') : dayjs(),
+            status: remotepower
+            ? (doortoggle
+                ? '중앙문이 열려 있어요'
+                : (doorautotoggle
+                    ? `중앙문이 자동으로 ${dayjs(`${doorstarttimevalue}:${doorstartminutevalue}`, 'h:m').format('A hh:mm')}에 열고, ${dayjs(`${doorendtimevalue}:${doorendminutevalue}`, 'h:m').format('A hh:mm')}에 닫아요`
+                    : '중앙문이 열려 있지 않아요'
+                )
+            ) : '원격 제어 모드가 아니에요',
+            workButtonText: doortoggle ? '닫기' : '열기'
         })     
     },
     initialState

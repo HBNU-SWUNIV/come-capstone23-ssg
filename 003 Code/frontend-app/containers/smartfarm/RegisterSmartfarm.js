@@ -5,6 +5,7 @@ import RegisterSmartfarmComponent from '../../components/smartfarm/RegisterSmart
 import { changeSmartfarmNumber, registerSmartfarmInitialize, checkSmartfarmNumber, registerSmartfarm } from '../../slices/smartfarm/smartfarm';
 
 function RegisterSmartfarm() {
+    const token = useSelector(state => state.user.token);
     const smartfarmNumber = useSelector(state => state.smartfarm.smartfarmNumber);
     const checkSmartfarmNumberSuccess = useSelector(state => state.smartfarm.checkSmartfarmNumberSuccess);
     const registerSmartfarmSuccess = useSelector(state => state.smartfarm.registerSmartfarmSuccess);
@@ -17,11 +18,14 @@ function RegisterSmartfarm() {
     const clear = () => {dispatch(registerSmartfarmInitialize())};
 
     const onCheckSmartfarmNumber = () => {
-        dispatch(checkSmartfarmNumber({smartfarmNumber}));
+        dispatch(checkSmartfarmNumber(smartfarmNumber));
     };
 
     const onRegisterSmartfarm = () => {
-        dispatch(registerSmartfarm({smartfarmNumber}));
+        dispatch(registerSmartfarm({
+            token,
+            smartfarmNumber
+        }));
     };
 
     const goBack = () => {

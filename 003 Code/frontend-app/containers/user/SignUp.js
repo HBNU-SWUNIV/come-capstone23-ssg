@@ -16,6 +16,7 @@ function SignUp() {
     const id = useSelector(state => state.user.id);
     const password = useSelector(state => state.user.password);
     const passwordCheck = useSelector(state => state.user.passwordCheck);
+    const phoneNumber = useSelector(state => state.user.phoneNumber);
     const signupSuccess = useSelector(state => state.user.signupSuccess);
 
     const dispatch = useDispatch();
@@ -28,12 +29,14 @@ function SignUp() {
 
     const clear = () => {dispatch(signupInitialize())};
 
-    const onSignUp = () => {dispatch(signup({
-        id,
-        password,
-        passwordCheck,
-        name
-    }))};
+    const onSignUp = () => {
+        dispatch(signup({
+            id,
+            password,
+            name,
+            phoneNumber
+        }));
+    };
 
     const goBack = () => {
         navigation.popToTop();

@@ -6,7 +6,6 @@ import ContainerBox from '../../components/common/ContainerBox';
 import AppBar from '../../containers/common/AppBar';
 import TypographyPageName from '../../components/common/TypographyPageName';
 import SettingVerify from '../../containers/setting/SettingVerify';
-import Snackbar from '../../containers/common/Snackbar';
 
 const destinations = {
     'password': '비밀번호 재설정',
@@ -36,7 +35,6 @@ const SettingVerifyPage = () => {
                 <TypographyPageName text='비밀번호 확인'/>
                 <SettingVerify />
             </ContainerBox>
-            <Snackbar />
         </div>
     );
 };

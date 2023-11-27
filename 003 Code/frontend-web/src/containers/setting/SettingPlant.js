@@ -2,10 +2,11 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import SettingPlantComponent from '../../components/setting/SettingPlant';
-import { changeName, changeDay, modifyPlantInitialize, removePlantInitialize, modifyPlant, removePlant } from '../../modules/smartfarm/plant';
+import { changeName, changeDay, modifyPlantInitialize, removePlantInitialize, getPlant, modifyPlant, removePlant } from '../../modules/smartfarm/plant';
 
 const SettingPlant = () => {
     const token = useSelector(state => state.user.token);
+    const exist = useSelector(state => state.plant.exist);
     const name = useSelector(state => state.plant.name);
     const day = useSelector(state => state.plant.day);
     const removePlantSuccess = useSelector(state => state.plant.removePlantSuccess);
@@ -39,8 +40,20 @@ const SettingPlant = () => {
     };
 
     useEffect(() => {
+        if (exist) {
+            dispatch(getPlant(token));
+        }
+    }, [exist, dispatch, token]);
+
+    useEffect(() => {
+        if (!exist) {
+            navigate(process.env.REACT_APP_REGISTER_PLANT_PATH);
+        }
+    }, [exist, navigate]);
+
+    useEffect(() => {
         if (removePlantSuccess) {
-            navigate(process.env.REACT_APP_REMOVE_SMARTFARM_SUCCESS_PATH);
+            navigate(process.env.REACT_APP_REMOVE_PLANT_SUCCESS_PATH);
             dispatch(removePlantInitialize());
         }
 

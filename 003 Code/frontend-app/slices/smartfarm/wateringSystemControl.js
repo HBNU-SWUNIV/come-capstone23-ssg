@@ -7,6 +7,7 @@ import {
 } from 'redux-saga/effects';
 import createControlRequestSaga from "../../assets/api/createControlRequestSaga";
 import * as WebAPI from '../../assets/api/webApi';
+import { checkSuccess } from "../user/user";
 
 const CHANGE_WORK = 'wateringSystemControl/changeWork';
 const CHANGE_WORK_TIME = 'wateringSystemControl/changeWorkTime';
@@ -14,9 +15,9 @@ const CHANGE_AUTOWORK = 'wateringSystemControl/changeAutoWork';
 const CHANGE_AUTOWORK_PERIOD = 'wateringSystemControl/changeAutoWorkPeriod';
 
 export const changeWork = createAction(CHANGE_WORK);
-export const changeWorkTime = createAction(CHANGE_WORK_TIME, workTime => workTime);
+export const changeWorkTime = createAction(CHANGE_WORK_TIME);
 export const changeAutoWork = createAction(CHANGE_AUTOWORK);
-export const changeAutoWorkPeriod = createAction(CHANGE_AUTOWORK_PERIOD, autoWorkPeriod => autoWorkPeriod);
+export const changeAutoWorkPeriod = createAction(CHANGE_AUTOWORK_PERIOD);
 
 const initialState = {
     work: false,
@@ -64,6 +65,24 @@ const wateringSystemControlSlice = createSlice({
             state.status = action.payload ? '관수 시스템이 작동하고 있지 않아요' : '원격 제어 모드가 아니에요'
             state.workButtonText = '물 주기'
         }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(checkSuccess, (state, action) => {
+                state.work = action.payload.remotepower ? action.payload.waterpumptoggle : false
+                state.workTime = action.payload.remotepower ? action.payload.waterpumprunningtime : 8
+                state.autoWork = action.payload.remotepower ? action.payload.waterpumpautotoggle : false
+                state.autoWorkPeriod = action.payload.remotepower ? action.payload.waterpumpstarttime : 1
+                state.status = action.payload.remotepower
+                ? (action.payload.waterpumptoggle
+                    ? `관수 시스템이 ${action.payload.waterpumprunningtime}초 동안 물을 뿌려요`
+                    : (action.payload.waterpumpautotoggle
+                        ? `관수 시스템이 자동으로 ${action.payload.waterpumpstarttime}시간 마다 ${action.payload.waterpumprunningtime}초 동안 물을 뿌려요`
+                        : '관수 시스템이 작동하고 있지 않아요'
+                    )
+                ) : '원격 제어 모드가 아니에요'
+                state.workButtonText = action.payload.waterpumptoggle ? '중단하기' : '물 주기'
+            })
     }
 });
 

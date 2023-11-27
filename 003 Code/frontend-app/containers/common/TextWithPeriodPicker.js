@@ -3,8 +3,9 @@ import TextWithPeriodPickerComponent from '../../components/common/TextWithPerio
 
 function TextWithPeriodPicker({
     name,
-    workTime,
+    period,
     periodNumbers,
+    workTime,
     disabled,
     onChange
 }) {

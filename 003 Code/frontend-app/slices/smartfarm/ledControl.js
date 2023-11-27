@@ -2,6 +2,7 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import { takeLatest } from "redux-saga/effects";
 import createControlRequestSaga from "../../assets/api/createControlRequestSaga";
 import * as WebAPI from '../../assets/api/webApi';
+import { checkSuccess } from "../user/user";
 
 const CHANGE_WORK = 'ledControl/changeWork';
 const CHANGE_AUTOWORK = 'ledControl/changeAutoWork';
@@ -14,24 +15,24 @@ const CHANGE_AUTOWORK_END_MINUTE = 'ledControl/changeAutoWorkEndMinute';
 
 export const changeWork = createAction(CHANGE_WORK);
 export const changeAutoWork = createAction(CHANGE_AUTOWORK);
-export const changeAutoWorkStartDayNight = createAction(CHANGE_AUTOWORK_START_DAYNIGHT, startDayNight => startDayNight);
-export const changeAutoWorkStartHour = createAction(CHANGE_AUTOWORK_START_HOUR, startHour => startHour);
-export const changeAutoWorkStartMinute = createAction(CHANGE_AUTOWORK_START_MINUTE, startMinute => startMinute);
-export const changeAutoWorkEndDayNight = createAction(CHANGE_AUTOWORK_END_DAYNIGHT, endDayNight => endDayNight);
-export const changeAutoWorkEndHour = createAction(CHANGE_AUTOWORK_END_HOUR, endHour => endHour);
-export const changeAutoWorkEndMinute = createAction(CHANGE_AUTOWORK_END_MINUTE, endMinute => endMinute);
+export const changeAutoWorkStartDayNight = createAction(CHANGE_AUTOWORK_START_DAYNIGHT);
+export const changeAutoWorkStartHour = createAction(CHANGE_AUTOWORK_START_HOUR);
+export const changeAutoWorkStartMinute = createAction(CHANGE_AUTOWORK_START_MINUTE);
+export const changeAutoWorkEndDayNight = createAction(CHANGE_AUTOWORK_END_DAYNIGHT);
+export const changeAutoWorkEndHour = createAction(CHANGE_AUTOWORK_END_HOUR);
+export const changeAutoWorkEndMinute = createAction(CHANGE_AUTOWORK_END_MINUTE);
 
 const initialState = {
     work: false,
     autoWork: false,
     autoWorkStart: {
         dayNight: 'AM',
-        hour: '01',
+        hour: '00',
         minute: '00'
     },
     autoWorkEnd: {
         dayNight: 'AM',
-        hour: '01',
+        hour: '00',
         minute: '00'
     },
     status: '원격 제어 모드가 아니에요',
@@ -39,14 +40,42 @@ const initialState = {
     workButtonText: '켜기'
 };
 
+function dayNightIntToString(hour) {
+    if (hour < 12) {
+        return 'AM';
+    } else {
+        return 'PM';
+    }
+}
+
+function hourIntToString(hour) {
+    if (hour < 10) {
+        return `0${String(hour)}`;
+    } else if (hour < 12) {
+        return String(hour);
+    } else if (hour < 22) {
+        return `0${String(hour % 12)}`
+    } else {
+        return String(hour % 12);
+    }
+}
+
+function minuteIntToString(minute) {
+    if (minute < 10) {
+        return `0${String(minute)}`;
+    } else {
+        return String(minute);
+    }
+}
+
 const ledControlSlice = createSlice({
     name: 'ledControl',
     initialState,
     reducers: {
         changeWorkSuccess(state) {
             state.work = !state.work
-            state.status = state.work ? 'LED가 꺼져 있어요' : 'LED가 켜져 있어요'
-            state.workButtonText = state.work ? '켜기' : '끄기'
+            state.status = state.work ? 'LED가 켜져 있어요' : 'LED가 꺼져 있어요'
+            state.workButtonText = state.work ? '끄기' : '켜기'
         },
         changeAutoWorkSuccess(state) {
             state.work = false
@@ -83,17 +112,39 @@ const ledControlSlice = createSlice({
             state.autoWork = false
             state.autoWorkStart = {
                 dayNight: 'AM',
-                hour: '01',
+                hour: '00',
                 minute: '00'
             }
             state.autoWorkEnd = {
                 dayNight: 'AM',
-                hour: '01',
+                hour: '00',
                 minute: '00'
             }
             state.status = action.payload ? 'LED가 꺼져 있어요' : '원격 제어 모드가 아니에요'
             state.workButtonText = '켜기'
         }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(checkSuccess, (state, action) => {
+                state.work = action.payload.remotepower ? action.payload.ledtoggle : false
+                state.autoWork = action.payload.remotepower ? action.payload.ledautotogle : false
+                state.autoWorkStart.dayNight = action.payload.remotepower ? dayNightIntToString(action.payload.ledstarttimevalue) : 'AM'
+                state.autoWorkStart.hour = action.payload.remotepower ? hourIntToString(action.payload.ledstarttimevalue) : '00'
+                state.autoWorkStart.minute = action.payload.remotepower ? minuteIntToString(action.payload.ledstartminutevalue) : '00'
+                state.autoWorkEnd.dayNight = action.payload.remotepower ? dayNightIntToString(action.payload.ledendtimevalue) : 'AM'
+                state.autoWorkEnd.hour = action.payload.remotepower ? hourIntToString(action.payload.ledendtimevalue) : '00'
+                state.autoWorkEnd.minute = action.payload.remotepower ? minuteIntToString(action.payload.ledendminutevalue) : '00'
+                state.status = action.payload.remotepower
+                ? (action.payload.ledtoggle
+                    ? 'LED가 켜져 있어요'
+                    : (action.payload.ledautotogle
+                        ? `LED가 자동으로 ${dayNightIntToString(action.payload.ledstarttimevalue)} ${hourIntToString(action.payload.ledstarttimevalue)}:${minuteIntToString(action.payload.ledstartminutevalue)}에 켜지고, ${dayNightIntToString(action.payload.ledendtimevalue)} ${hourIntToString(action.payload.ledendtimevalue)}:${minuteIntToString(action.payload.ledendminutevalue)}에 꺼져요`
+                        : 'LED가 꺼져 있어요'
+                    )
+                ) : '원격 제어 모드가 아니에요'
+                state.workButtonText = action.payload.ledtoggle ? '끄기' : '켜기'
+            });
     }
 });
 

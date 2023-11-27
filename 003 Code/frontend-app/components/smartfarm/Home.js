@@ -17,8 +17,13 @@ import door from '../../assets/icon/door.png';
 function Home({
     existSmartfarm,
     existPlant,
+    name,
+    day,
     temperature,
     humidity,
+    waterTemperature,
+    waterLevel,
+    ndvi,
     ledControlStatus,
     wateringSystemControlStatus,
     fanControlStatus,
@@ -28,7 +33,8 @@ function Home({
     goLedControl,
     goWateringSystemControl,
     goFanControl,
-    goCenterDoorControl
+    goCenterDoorControl,
+    onHarvest
 }) {
     const systems = [
         {
@@ -90,7 +96,12 @@ function Home({
                                 onPress={goRegisterPlant}
                             />
                         ) : (
-                            <HomeRegisterPlant />
+                            <HomeRegisterPlant
+                                name={name}
+                                day={day}
+                                ndvi={ndvi}
+                                onHarvest={onHarvest}
+                            />
                         )}
                         <Card style={styles.card}>
                             <Card.Content>
@@ -101,6 +112,18 @@ function Home({
                                 <Environment
                                     name='습도'
                                     value={`${humidity}%`}
+                                />
+                                <Environment
+                                    name='수온'
+                                    value={`${waterTemperature}℃`}
+                                />
+                                <Environment
+                                    name='수위'
+                                    value={`${waterLevel}cm`}
+                                />
+                                <Environment
+                                    name='NDVI(정규 식생 지수)'
+                                    value={ndvi ? ndvi : '-'}
                                 />
                             </Card.Content>
                         </Card>

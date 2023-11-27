@@ -3,6 +3,7 @@ import TextWithNumberPickerComponent from '../../components/common/TextWithNumbe
 
 function TextWithNumberPicker({
     name,
+    value,
     numbers,
     disabled,
     onChange

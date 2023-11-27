@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 import { select, put, delay, takeLatest } from 'redux-saga/effects';
 import createControlRequestSaga, { createControlRequesActionTypes } from '../../lib/api/createControlRequestSaga';
 import * as WebAPI from '../../lib/api/webApi';
+import { CHECK_SUCCESS } from '../user/user';
 
 const [CHANGE_WORK, CHANGE_WORK_SUCCESS] = createControlRequesActionTypes('wateringSystemControl/CHANGE_WORK');
 const CHANGE_WORK_STOP = 'wateringSystemControl/CHANGE_WORK_STOP';
@@ -45,9 +46,7 @@ const initialState = {
     autoWorkPeriod: 1,
     status: '원격 제어 모드가 아니에요',
 
-    workButtonText: '물 주기',
-    getError: 'null',
-    postError: 'null'
+    workButtonText: '물 주기'
 };
 
 const wateringSystemControl = handleActions(
@@ -89,6 +88,28 @@ const wateringSystemControl = handleActions(
             autoWorkPeriod: 1,
             status: remoteControl ? '관수 시스템이 작동하고 있지 않아요' : '원격 제어 모드가 아니에요',
             workButtonText: '물 주기'
+        }),
+        [CHECK_SUCCESS]: (state, { payload: {
+            remotepower,
+            waterpumptoggle,
+            waterpumprunningtime,
+            waterpumpautotoggle,
+            waterpumpstarttime
+        }}) => ({
+            ...state,
+            work: remotepower ? waterpumptoggle : false,
+            workTime: remotepower ? waterpumprunningtime : 8,
+            autoWork: remotepower ? waterpumpautotoggle : false,
+            autoWorkPeriod: remotepower ?  waterpumpstarttime : 1,
+            status: remotepower
+            ? (waterpumptoggle
+                ? `관수 시스템이 ${state.workTime}초 동안 물을 뿌려요`
+                : (waterpumpautotoggle
+                    ? `관수 시스템이 자동으로 ${waterpumpstarttime}시간 마다 ${waterpumprunningtime}초 동안 물을 뿌려요`
+                    : '관수 시스템이 작동하고 있지 않아요'
+                )
+            ) : '원격 제어 모드가 아니에요',
+            workButtonText: waterpumpautotoggle ? '중단하기' : '물 주기'
         })
     },
     initialState

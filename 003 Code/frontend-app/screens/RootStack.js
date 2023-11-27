@@ -30,7 +30,6 @@ async function loadToken() {
 
 		store.dispatch(check(token));
 	} catch (e) {
-        console.log(e);
 		console.log('asyncStorage is not working');
 	}
 }

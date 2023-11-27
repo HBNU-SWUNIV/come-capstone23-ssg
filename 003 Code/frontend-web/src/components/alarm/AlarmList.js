@@ -11,18 +11,12 @@ import plant from '../../lib/icon/plant.png';
 const AlarmList = ({
     existSmartfarm,
     existPlant,
+    smartfarmAlarm,
     goRegisterSmartfarm,
     goRegisterPlant
 }) => {
     const userAlarm = null;
-    const SmartFarmAlarm = [
-        { id: 1, text: '현장 제어 모드로 설정하셨습니다.', time: '15분 전' },
-        { id: 2, text: '원격 제어 모드로 설정하셨습니다.', time: '2시간 전' }
-    ];
-    const PlantAlarm = [
-        { id: 1, text: '작물을 키우기 시작하셨습니다.', time: '10일 전' },
-        { id: 2, text: '작물 이름을 \'새싹이\'로 변경하셨습니다.', time: '3일 전'}
-    ];
+    const plantAlarm = null;
 
     return (
         <div style={{ width: '100%'}}>
@@ -41,7 +35,7 @@ const AlarmList = ({
                 { !existSmartfarm ? (
                     <ButtonDefault
                         sx={{
-                            mt: 1,
+                            mt: 2,
                             fontSize: 'medium',
                             fontweight: 'bold',
                             color: '#ffffff'
@@ -50,7 +44,7 @@ const AlarmList = ({
                         text="스마트팜 등록"
                     />
                 ) : (
-                    SmartFarmAlarm && SmartFarmAlarm.map((alarm) => <AlarmItem key={alarm.id} alarm={alarm}/>)
+                    smartfarmAlarm && smartfarmAlarm.map((alarm) => <AlarmItem key={alarm.id} alarm={alarm}/>)
                 )}
             </AlarmBox>
             <AlarmBox
@@ -60,7 +54,7 @@ const AlarmList = ({
                 { !existPlant ? (
                     <ButtonDefault
                         sx={{
-                            mt: 1,
+                            mt: 2,
                             fontSize: 'medium',
                             fontweight: 'bold',
                             color: '#ffffff'
@@ -69,9 +63,10 @@ const AlarmList = ({
                         text="작물 등록"
                     />
                 ) : (
-                    PlantAlarm && PlantAlarm.map((alarm) => <AlarmItem key={alarm.id} alarm={alarm}/>)
+                    plantAlarm && plantAlarm.map((alarm) => <AlarmItem key={alarm.id} alarm={alarm}/>)
                 )}
             </AlarmBox>
+            <div style={{ height: 30 }}/>
         </div>
     )
 }

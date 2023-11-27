@@ -4,18 +4,20 @@ import { useSelector } from 'react-redux';
 import ContainerBox from '../../components/common/ContainerBox';
 import TypographyPageName from '../../components/common/TypographyPageName';
 import RegisterPlant from '../../containers/smartfarm/RegisterPlant';
-import Snackbar from '../../containers/common/Snackbar';
 
 const RegisterPlantPage = () => {
     const token = useSelector(state => state.user.token);
+    const exist = useSelector(state => state.plant.exist);
 
     const navigate = useNavigate();
 
     useEffect(() => {
         if (token === null) {
             navigate(process.env.REACT_APP_LOGIN_PATH);
+        } else if (exist === true) {
+            navigate(process.env.REACT_APP_HOME_PATH);
         }
-    }, [token, navigate]);
+    }, [token, exist, navigate]);
     
     return (
         <div>
@@ -23,7 +25,6 @@ const RegisterPlantPage = () => {
                 <TypographyPageName text="작물 등록"/>
                 <RegisterPlant />
             </ContainerBox>
-            <Snackbar />
         </div>
     );
 };

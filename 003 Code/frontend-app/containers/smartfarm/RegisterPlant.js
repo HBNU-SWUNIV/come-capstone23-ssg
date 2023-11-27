@@ -2,9 +2,11 @@ import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import RegisterPlantComponent from '../../components/smartfarm/RegisterPlant';
+import { showSnackbar } from '../../slices/common';
 import { changeName, changeDay, registerPlantInitialize, registerPlant } from '../../slices/smartfarm/plant';
 
 function RegisterPlant() {
+    const token = useSelector(state => state.user.token);
     const name = useSelector(state => state.plant.name);
     const day = useSelector(state => state.plant.day);
     const registerPlantSuccess = useSelector(state => state.plant.registerPlantSuccess);
@@ -19,7 +21,7 @@ function RegisterPlant() {
 
     const onRegisterPlant = () => {
         if (Number(day) < 0) {
-            console.log('작물을 키운 날짜를 0보다 큰 숫자로 입력해주세요');
+            dispatch(showSnackbar('작물을 키운 날짜를 0보다 큰 숫자로 입력해주세요'));
             return;
         }
 
@@ -27,7 +29,11 @@ function RegisterPlant() {
             dispatch(changeName('새싹이'));
         }
         
-        dispatch(registerPlant({name, day}));
+        dispatch(registerPlant({
+            token,
+            name,
+            day
+        }));
         
     };
 

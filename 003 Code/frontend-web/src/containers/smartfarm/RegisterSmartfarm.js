@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import RegisterSmartfarmComponent from '../../components/smartfarm/RegisterSmartfarm';
-import { changeSmartfarmNumber, registerSmartfarmInitialize, checkSmartfarmNumber, registerSmartfarm } from '../../modules/smartfarm/smartfarm';
+import { changeSmartfarmNumber, registerSmartfarmInitialize, registerSmartfarmSuccessInitialize, checkSmartfarmNumber, registerSmartfarm } from '../../modules/smartfarm/smartfarm';
 
 const RegisterSmartfarm = () => {
     const token = useSelector(state => state.user.token);
@@ -33,7 +33,13 @@ const RegisterSmartfarm = () => {
             navigate(process.env.REACT_APP_REGISTER_SMARTFARM_SUCCESS_PATH);
         }
 
-        return () => dispatch(registerSmartfarmInitialize());
+        return () => {
+            if (registerSmartfarmSuccess === false) {
+                dispatch(registerSmartfarmInitialize());
+            } else if (registerSmartfarmSuccess) {
+                dispatch(registerSmartfarmSuccessInitialize());
+            }
+        }
     }, [registerSmartfarmSuccess, navigate, dispatch]);
 
     return (
