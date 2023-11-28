@@ -1,6 +1,9 @@
 # 한밭대학교 컴퓨터공학과 SSG팀
 **🧑‍🌾 작물 생장 모니터링 및 알람 자동화 기능을 갖춘 스마트팜 시스템**
-
+<br/>
+<p align="center">
+  <img src="https://github.com/HBNU-SWUNIV/come-capstone23-ssg/assets/96428770/af3bff9c-e230-4238-ab30-91a0ebbea42a" width="630px" height="500px">
+<p/>
 
 <br/><br/>
 
@@ -95,6 +98,9 @@
     |RGB 이미지|NIR 이미지|NDVI 이미지|
     |:---:|:---:|:---:|
     |<img src="https://github.com/HBNU-SWUNIV/come-capstone23-ssg/assets/96428770/a98df898-0cd8-4054-ad3a-2bdd47e6ac76" width="200px" height="200px">|<img src="https://github.com/HBNU-SWUNIV/come-capstone23-ssg/assets/96428770/1ffaa80d-3241-4e66-b268-6f269b0921b0" width="200px" height="200px">|<img src="https://github.com/HBNU-SWUNIV/come-capstone23-ssg/assets/96428770/1bc87d85-348a-41b8-ad23-6a3a19621bf3" width="200px" height="200px">|
+
+    - CycleGAN 관련 논문: [Unpaired Image-to-Image Translation Using Cycle-Consistent Adversarial Networks](https://ieeexplore.ieee.org/document/8237506)
+    - CycleGAN 논문 저자 코드: [URL](https://github.com/junyanz/CycleGAN)
 
   - #### 🌐 웹&앱
     - 작물 생장 상태 확인 기능: NDVI 값을 통해 작물 생장 상태를 확인한다.
