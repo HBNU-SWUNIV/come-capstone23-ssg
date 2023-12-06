@@ -26,12 +26,17 @@ firebase_admin.initialize_app(cred)
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)m)3s_ax%f@q#0#*r-m_gj5&lh_yzssoupfnba!v%l_y7dlkd7'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['192.168.219.106', '127.0.0.1', '192.168.219.106:3000']
+
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# SECURE_SSL_REDIRECT = True
 
 # Application definition
 
@@ -51,6 +56,7 @@ INSTALLED_APPS = [
     'accounts',
     'crops',
     'fcm_notification',
+    # 'sslserver',
 ]
 
 MIDDLEWARE = [
@@ -187,3 +193,5 @@ CORS_ALLOW_HEADERS = (
     'x-csrftoken',
     'x-requested-with',
 )
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')

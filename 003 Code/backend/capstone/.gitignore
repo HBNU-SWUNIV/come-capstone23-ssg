@@ -1,2 +1,5 @@
 db.sqlite3
 *.json
+*.crt
+*.key
+static/

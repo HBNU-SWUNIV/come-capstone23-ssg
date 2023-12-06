@@ -7,7 +7,7 @@ app_name = 'server'
 urlpatterns = [
     # path('', PatentAttorneyListView.as_view(), name='patent-attorney-list'),
     # path('<int:pk>/', PatentAttorneyRetrieveView.as_view(), name='patent-attorney-retrieve')
-    path('raspberry', RaspberryView.as_view(), ),
+    path('raspberry', RaspberryView.as_view()),
     path('info', InfoView.as_view()),
     path('led', LedView.as_view()),
     path('water', WaterView.as_view()),

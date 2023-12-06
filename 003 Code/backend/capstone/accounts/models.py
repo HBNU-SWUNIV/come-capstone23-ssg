@@ -44,7 +44,7 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class User(AbstractUser):
-    phone_number = models.CharField(max_length=20)
-    name = models.CharField(max_length=20, null=True)
-    fcm_token = models.CharField(max_length=100, null=True)
-    fcm_webtoken = models.CharField(max_length=100, null=True)
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
+    name = models.CharField(max_length=20, null=True, blank=True)
+    fcm_token = models.CharField(max_length=100, null=True, blank=True)
+    fcm_webtoken = models.CharField(max_length=100, null=True, blank=True)
