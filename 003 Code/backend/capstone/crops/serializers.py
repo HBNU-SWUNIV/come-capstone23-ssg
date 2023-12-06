@@ -9,3 +9,9 @@ class SmartFarmCropModelSerializer(ModelSerializer):
         model = SmartFarmCrop
         fields = '__all__'
         
+class UplaodImageModelSerializer(ModelSerializer):
+    class Meta:
+        model = UploadImage
+        fields = '__all__'
+
+        
